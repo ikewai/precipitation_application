@@ -17,11 +17,13 @@ class DatasetFormNode {
   private _control: FormControl;
   private _description: string;
   private _category: DatasetFormCategory;
-  constructor(description: string, defaultValue: string, category: DatasetFormCategory) {
+  constructor(description: string, defaultValue: string, category: DatasetFormCategory, values: {[tag: string]: FormValueNode}) {
     let control = new FormControl(defaultValue);
     this._control = control;
     this._description = description;
     this._category = category;
+
+    control.valueChanges.subscribe();
   }
 
   public get control(): FormControl {
@@ -37,21 +39,24 @@ class DatasetFormNode {
   }
 }
 
-class DatasetDisplayNode {
-  includeStations: boolean;
-  includeRaster: boolean;
-  constructor(includeStations: boolean, includeRaster: boolean, stationForm: DatasetFormNode) {
-    this.includeStations = includeStations;
-    this.includeRaster = includeRaster;
-  }
-}
 
-// unit: "mm",
-//         dataRange: [0, 20],
-//         rangeAbsolute: [true, false],
+
+
 class DatasetPropertiesNode {
-  constructor(unit: string, dateRange: [number, number], rangeAbsolute: [boolean, boolean]) {
 
+  private _includeStations: boolean;
+  private _includeRaster: boolean;
+  private _unit: string;
+  private _dateRange: [number, number];
+  private _rangeAbsolute: [boolean, boolean];
+
+
+  constructor(includeStations: boolean, includeRaster: boolean, unit: string, dateRange: [number, number], rangeAbsolute: [boolean, boolean]) {
+    this._includeStations = includeStations;
+    this._includeRaster = includeRaster;
+    this._unit = unit;
+    this._dateRange = dateRange;
+    this._rangeAbsolute = rangeAbsolute;
   }
 }
 

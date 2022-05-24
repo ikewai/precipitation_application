@@ -70,10 +70,11 @@ export class SiteAvailabilityTableComponent implements AfterViewInit, AfterConte
   tableData: TableFormat;
   siteMap: Map<SiteInfo, number>;
   selectedRef: RowRef;
-  scrollbarWidth: number;
+  scrollbarWidth: string;
 
   constructor(private cdr: ChangeDetectorRef, scrollWidthService: ScrollbarWidthCalcService) {
-    this.scrollbarWidth = scrollWidthService.getScrollbarWidth();
+    this.scrollbarWidth = scrollWidthService.getScrollbarWidth() + "px";
+    console.log(this.scrollbarWidth);
     this.siteMap = new Map<SiteInfo, number>();
     this.tableData = {
       header: ["Name", "Station ID", "Island"],
