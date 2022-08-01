@@ -74,7 +74,6 @@ export class SiteAvailabilityTableComponent implements AfterViewInit, AfterConte
 
   constructor(private cdr: ChangeDetectorRef, scrollWidthService: ScrollbarWidthCalcService) {
     this.scrollbarWidth = scrollWidthService.getScrollbarWidth() + "px";
-    console.log(this.scrollbarWidth);
     this.siteMap = new Map<SiteInfo, number>();
     this.tableData = {
       header: ["Name", "Station ID", "Island"],
@@ -95,7 +94,6 @@ export class SiteAvailabilityTableComponent implements AfterViewInit, AfterConte
   ngAfterViewInit() {
     this.generateRowMap(this.dataRows);
     this.dataRows.changes.subscribe((rows: QueryList<ElementRef>) => {
-      //console.log(rows);
       this.generateRowMap(rows);
     });
 
