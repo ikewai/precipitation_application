@@ -17,7 +17,7 @@ jobs:
       with:
         node-version: 16.0.0
     - name: add config
-      run: echo "${{ secrets.API_CONFIG_JSON }}" >> src/assets/api_config.json
+      run: echo "${{ secrets.API_CONFIG_JSON }}" | base64 -d >> src/assets/api_config.json
     - name: test config
       run: cat src/assets/api_config.json
     - name: build
