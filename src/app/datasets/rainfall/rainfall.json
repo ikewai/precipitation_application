@@ -1,4 +1,22 @@
 {
+
+  "datasets": [{
+    "selector": {
+      "period": "month",
+      "fill": "partial"
+    }
+  }]
+
+
+
+
+
+
+
+
+
+
+
   "label": "Monthly Rainfall",
   "categories": [{
     "id": "station",

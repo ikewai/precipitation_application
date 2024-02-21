@@ -1,0 +1,43 @@
+name: build_and_deploy
+
+on:
+  push:
+    branches:
+    - "prod"
+    paths-ignore:
+    - "**/README.md"
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js 16.0.0
+      uses: actions/setup-node@v4
+      with:
+        node-version: 16.0.0
+    - name: add config
+      run: echo ${{ secrets.API_CONFIG_JSON }} >> src/assets/api_config.json
+    - name: build
+      run: npm install && ng build --prod
+    - name: upload artifacts
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: dist
+        if-no-files-found: error
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+          
