@@ -221,8 +221,7 @@ export class DatasetFormManagerService {
     let date2012 = moment("2012-12");
     let dateNDVIStart = moment("2000-02-18");
     let dateNDVIEnd = moment("2023-07-12");
-    let dateRHStart = moment("2000-02-18");
-    let dateRHEnd = moment("2021-12-19");
+    let dateRHStart = moment("2002-01-01");
     ////periods
     let yearPeriod = new PeriodData("year", 1, "year");
     let monthPeriod = new PeriodData("month", 1, "month");
@@ -236,7 +235,7 @@ export class DatasetFormManagerService {
     let dsDynamicalFocusManager = new TimeSelectorData(dsPeriodDynamicalNode, periodPresent);
     let dsStatisticalFocusManager = new TimeSelectorData(dsPeriodStatisticalNode, periodPresent);
     let ndviFocusManager = new NDVITimeseriesData(dateNDVIStart, dateNDVIEnd, day16Period, yearPeriod, this.dateHandler, dateNDVIEnd);
-    let rhFocusManager = new TimeseriesData(dateRHStart, dateRHEnd, dayPeriod, monthPeriod, this.dateHandler, dateRHEnd);
+    let rhFocusManager = new TimeseriesData(dateRHStart, lastDay, dayPeriod, monthPeriod, this.dateHandler, lastDay);
 
     //cleanup the timeseries refs in model
     //Create Datasets
@@ -611,7 +610,7 @@ export class DatasetFormManagerService {
     let legacyRainfallTimeseriesHandler = new TimeseriesHandler(date1920, date2012, monthPeriod, this.dateHandler);
     let temperatureMonthTimeseriesHandler = new TimeseriesHandler(date1990, lastMonth, monthPeriod, this.dateHandler);
     let ndviTimeseriesHandler = new TimeseriesHandler(dateNDVIStart, dateNDVIEnd, day16Period, this.dateHandler);
-    let rhDayTimeseriesHandler = new TimeseriesHandler(dateRHStart, dateRHEnd, dayPeriod, this.dateHandler);
+    let rhDayTimeseriesHandler = new TimeseriesHandler(dateRHStart, lastDay, dayPeriod, this.dateHandler);
 
     //export items
     ////rainfall
