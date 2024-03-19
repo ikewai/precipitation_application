@@ -22,17 +22,19 @@ export class StationFilterComponent implements OnInit {
     for(let item of metadata) {
       let formatData = item.format.formatData;
       for(let formatItem of formatData) {
-        if(typeof formatItem.value == "string") {
+        if(typeof formatItem.value == "string" && formatItem.value.trim() !== "") { // Check if value is not empty
           fieldData[formatItem.field] = formatItem;
           let fieldValueData = valueData[formatItem.field];
           if(fieldValueData === undefined) {
             fieldValueData = [];
             valueData[formatItem.field] = fieldValueData;
           }
+          // Check to if an item already exists, then proceeds to push to array if not.
+          if(!fieldValueData.some(existingItem => existingItem.value.toLowerCase() === formatItem.value.toLowerCase())) { // Convert to lowercase
           fieldValueData.push({
             display: formatItem.formattedValue,
             value: formatItem.value
-          });
+          });}
         }
       }
     }
