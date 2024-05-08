@@ -9,6 +9,10 @@ import { FormatData, Station, StationMetadata } from 'src/app/models/Stations';
   styleUrls: ['./station-filter.component.scss']
 })
 export class StationFilterComponent implements OnInit {
+
+  tr = [0, 10];
+  tf = new FormControl([2, 5]);
+
   private _stations: Station[];
   private _filteredStations: Station[];
   @Input() set stations(stations: Station[]) {
