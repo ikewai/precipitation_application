@@ -29,12 +29,15 @@ export class StationFilterComponent implements OnInit {
             fieldValueData = [];
             valueData[formatItem.field] = fieldValueData;
           }
-          // Check to if an item already exists, then proceeds to push to array if not.
-          if(!fieldValueData.some(existingItem => existingItem.value.toLowerCase() === formatItem.value.toLowerCase())) { // Convert to lowercase
-          fieldValueData.push({
-            display: formatItem.formattedValue,
-            value: formatItem.value
-          });}
+          // Check if an item already exists, then proceeds to push to array if not.
+          let lowercaseValue = formatItem.value.toLowerCase()
+          if(!fieldValueData.some(existingItem => existingItem.value.toLowerCase() === lowercaseValue)) { // Convert to lowercase
+            fieldValueData.push({
+              display: formatItem.formattedValue,
+              //case insensitive
+              value: lowercaseValue
+            });
+          }
         }
       }
     }
@@ -177,6 +180,10 @@ class StationFilter {
 
   match(station: Station): boolean {
     let value = <string>station.metadata.getValue(this._field);
+    if(typeof value == "string") {
+      //convert string values to lowercase, case insensitive
+      value = value.toLowerCase();
+    }
     return this._values.has(value);
   }
 }
