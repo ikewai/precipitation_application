@@ -107,7 +107,7 @@ export class StationMetadata {
             name: "Island",
             translate: (value: string) => {
                 let trans = {
-                    BI: "Big Island",
+                    BI: "Hawaiʻi",
                     OA: "Oʻahu",
                     MA: "Maui",
                     KA: "Kauai",

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef, AfterViewInit } from '@angular/core';
 import { UtilityService } from "../../../../services/util/utility.service";
 import { FormControl } from '@angular/forms';
 
@@ -17,7 +17,8 @@ interface SideComponents {
   templateUrl: './range-slider.component.html',
   styleUrls: ['./range-slider.component.scss']
 })
-export class RangeSliderComponent implements OnInit {
+export class RangeSliderComponent implements OnInit, AfterViewInit {
+  private static readonly THROTTLE_MS = 300;
 
   @ViewChild("sliderR", {static: false}) sliderR: ElementRef;
   @ViewChild("sliderL", {static: false}) sliderL: ElementRef;
@@ -26,9 +27,6 @@ export class RangeSliderComponent implements OnInit {
   @ViewChild("popup", {static: false}) popup: ElementRef;
   @ViewChild("popupText", {static: false}) popupText: ElementRef;
 
-  // @Output() lower: Subject<number>;
-  // @Output() upper: Subject<number>;
-
   private _range: [number, number];
 
   sliderController: TwoSidedSlider;
@@ -36,11 +34,14 @@ export class RangeSliderComponent implements OnInit {
     this._range = range;
     if(this.sliderController) {
       this.sliderController.setRange(range);
+
+      this.updateSide("left");
+      this.updateSide("right");
     }
   };
   @Input() control: FormControl;
 
-  //@Output() values: EventEmitter<[number, number]>
+  private throttle = null;
 
   expandScale: number;
 
@@ -55,38 +56,48 @@ export class RangeSliderComponent implements OnInit {
 
 
   constructor(private util: UtilityService) {
-    // this.lower = new Subject<number>();
-    // this.upper = new Subject<number>();
+    this.sliderComponents = {
+      left: {
+        control: new FormControl(0, {updateOn: "blur"}),
+        element: null,
+        lastValidValue: 0
+      },
+      right: {
+        control: new FormControl(0, {updateOn: "blur"}),
+        element: null,
+        lastValidValue: 0
+      },
+      fill: null
+    };
+
+
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.expandScale = 1.3;
-    let sliderWidth = 8;
+    let sliderWidth = 10;
     let trackLockOffset = 2;
-    let trackWidth = 100;
+    let trackWidth = 150;
 
     this.sliderWidth = sliderWidth;
 
     let min = this._range[0];
     let max = this._range[1];
 
+    this.sliderComponents.left.lastValidValue = min;
+    this.sliderComponents.left.control.setValue(min);
+    this.sliderComponents.right.lastValidValue = max;
+    this.sliderComponents.right.control.setValue(max);
+
     //initialize value at min and max
     let sliderController = new TwoSidedSlider(min, max, sliderWidth, trackWidth, trackLockOffset, this._range);
     this.sliderController = sliderController;
+  }
 
-    this.sliderComponents = {
-      left: {
-        control: new FormControl(min, {updateOn: "blur"}),
-        element: this.sliderL.nativeElement,
-        lastValidValue: min
-      },
-      right: {
-        control: new FormControl(max, {updateOn: "blur"}),
-        element: this.sliderR.nativeElement,
-        lastValidValue: max
-      },
-      fill: this.segFill.nativeElement
-    };
+  ngAfterViewInit() {
+    this.sliderComponents.left.element = this.sliderL.nativeElement;
+    this.sliderComponents.right.element = this.sliderR.nativeElement;
+    this.sliderComponents.fill = this.segFill.nativeElement;
 
     this.sliderComponents.left.element.style.transformOrigin = "center right";
     this.sliderComponents.right.element.style.transformOrigin = "center left";
@@ -94,11 +105,8 @@ export class RangeSliderComponent implements OnInit {
     this.setupSliderEvents("left");
     this.setupSliderEvents("right");
 
-    this.updateFromSliderData("left", sliderController.getData("left"));
-    this.updateFromSliderData("right", sliderController.getData("right"));
-
-
-
+    this.updateSide("left");
+    this.updateSide("right");
   }
 
 
@@ -113,9 +121,9 @@ export class RangeSliderComponent implements OnInit {
       }
 
       //update slider to new value (will also update this control to post validation value)
-      let data = this.sliderController.updateSlider(side, "val", numval);
+      this.sliderController.updateSlider(side, "val", numval);
       //set everything from the verified values (handles debounce, etc)
-      this.updateFromSliderData(side, data);
+      this.updateSide(side);
     }
     //otherwise reset
     else {
@@ -123,7 +131,8 @@ export class RangeSliderComponent implements OnInit {
     }
   }
 
-  updateFromSliderData(side: SliderSide, data: SliderData) {
+  updateSide(side: SliderSide) {
+    let data: SliderData = this.sliderController.getData(side);
     //not user input, prevent bounce
     this.userInput = false;
     let sliderData = this.sliderComponents[side];
@@ -133,8 +142,12 @@ export class RangeSliderComponent implements OnInit {
     sliderData.element.style.left = data.left + "px";
     this.updateFillSeg();
     let valueRange = this.sliderController.getRange();
-    //set control value
-    this.control.setValue(valueRange);
+    //throttle how often data is emitted
+    clearTimeout(this.throttle);
+    this.throttle = setTimeout(() => {
+      //set control value
+      this.control.setValue(valueRange);
+    }, RangeSliderComponent.THROTTLE_MS);
   }
 
   expandSlider(element: HTMLElement) {
@@ -163,10 +176,6 @@ export class RangeSliderComponent implements OnInit {
     //let lastX: number;
     element.addEventListener("mousedown", (e: MouseEvent) => {
       //don't prevent mousedown event propogation only drag (so focus properly taken off of fields)
-      // e.stopPropagation();
-      //e.preventDefault();
-
-      //lastX = e.clientX;
 
       this.expandSlider(element);
       document.body.style.cursor = "grabbing";
@@ -180,11 +189,9 @@ export class RangeSliderComponent implements OnInit {
         let sliderOffset = this.sliderWidth / 2;
         //convert from viewport coords to slider by subtracting left client bound of track, and offset to center of slider
         let x = e.clientX - track.getBoundingClientRect().left - sliderOffset;
-        //let deltaX = x - lastX;
-        //lastX = x;
         //just set the slider left position to the computed position, the slider logic will handle bounding
-        let data = this.sliderController.updateSlider(side, "left", x);
-        this.updateFromSliderData(side, data);
+        this.sliderController.updateSlider(side, "left", x);
+        this.updateSide(side);
       }
       window.addEventListener("mousemove", movFunct);
 
@@ -225,6 +232,8 @@ class TwoSidedSlider {
   setRange(valueRange: [number, number]) {
     this.data.left.setRange(valueRange);
     this.data.right.setRange(valueRange);
+    this.data.left.setValue(valueRange[0]);
+    this.data.right.setValue(valueRange[1]);
   }
 
   updateSlider(side: SliderSide, op: "val" | "left" | "move", value: number): SliderData {
@@ -401,7 +410,6 @@ abstract class Slider {
       //round value to two decimal places (if want something more precise they can type it)
       value = Math.round(value * 100) / 100;
     }
-
     this.value = value;
     return value;
   }

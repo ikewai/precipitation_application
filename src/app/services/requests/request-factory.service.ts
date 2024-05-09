@@ -14,7 +14,7 @@ export class RequestFactoryService {
   //decouple for easy testing of API changes
   static readonly API_KEYS = {
     hcdp: "cistore",
-    tapis: "hcdp_api"
+    tapis: "cistore"
   };
 
   static readonly GEOTIFF_NODATA = -3.3999999521443642e+38;

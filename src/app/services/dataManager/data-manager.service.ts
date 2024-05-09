@@ -45,7 +45,7 @@ export class DataManagerService {
         loading: true
       });
     }, 0);
-   
+
     for(let timeseriesData of this.dataset.timeseriesData) {
       const start = timeseriesData.start;
       const end = timeseriesData.end;
@@ -55,13 +55,13 @@ export class DataManagerService {
         let end_s: string = date.toISOString();
         date.subtract(300 * timeseriesData.interval, timeseriesData.unit);
         let start_s: string = date.toISOString();
-      
+
         properties.period = timeseriesData.period.tag;
         let timeseriesRes = await exec(start_s, end_s, timeseriesData, location, properties, false);
         this.queries.timeseries.push(timeseriesRes);
       }
     }
-    
+
 
     let queryPromises = this.queries.timeseries.map((res: RequestResults) => {
       return res.toPromise()
@@ -117,7 +117,7 @@ export class DataManagerService {
       this.execTimeseries(this.reqFactory.getVStationTimeseries.bind(this.reqFactory), properties, location);
     }
   }
-  
+
 
   private async init() {
     //change to use station group listed in dataset
@@ -130,6 +130,10 @@ export class DataManagerService {
       for(let item of data) {
         //deconstruct
         let { station_group, id_field, ...stationMetadata } = item;
+        //convert numeric fields to numbers
+        stationMetadata.elevation_m = Number(stationMetadata.elevation_m);
+        stationMetadata.lat = Number(stationMetadata.lat);
+        stationMetadata.lng = Number(stationMetadata.lng);
         let metadata = new StationMetadata(id_field, stationMetadata);
         //yay for inconsistent data
         //value docs may have decimals that do not match, standardize id formats

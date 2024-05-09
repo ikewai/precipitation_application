@@ -20,39 +20,107 @@ export class StationFilterComponent implements OnInit {
     this.filterStations(stations, this.getFilters());
   }
   @Input() set metadata(metadata: StationMetadata[]) {
-    let fieldData = {};
-    let valueData: {[field: string]: {display: string, value: string}[]} = {};
-    //add in numeric filters by range, for now just handle string filters
-    for(let item of metadata) {
-      let formatData = item.format.formatData;
-      for(let formatItem of formatData) {
-        if(typeof formatItem.value == "string" && formatItem.value.trim() !== "") { // Check if value is not empty
-          fieldData[formatItem.field] = formatItem;
-          let fieldValueData = valueData[formatItem.field];
-          if(fieldValueData === undefined) {
-            fieldValueData = [];
-            valueData[formatItem.field] = fieldValueData;
+    let fieldData: {
+      [field: string]: {
+        display: string,
+        value: string
+      }
+    } = {};
+
+    let valueData: {
+      [field: string]: {
+        type: "discreet",
+        values: {
+          [value: string]: {
+            display: string,
+            value: string
           }
-          // Check if an item already exists, then proceeds to push to array if not.
-          let lowercaseValue = formatItem.value.toLowerCase()
-          if(!fieldValueData.some(existingItem => existingItem.value.toLowerCase() === lowercaseValue)) { // Convert to lowercase
-            fieldValueData.push({
-              display: formatItem.formattedValue,
-              //case insensitive
-              value: lowercaseValue
-            });
+        }
+      } | {
+        type: "continuous",
+        values: [number, number]
+      }
+    } = {};
+    for(let item of metadata) {
+      for(let format of item.format.formatData) {
+        fieldData[format.field] = {
+          display: format.formattedField,
+          value: format.field
+        };
+        let type = typeof(format.value);
+        if(type == "string") {
+          let values: {
+            [value: string]: {
+              display: string,
+              value: string
+            }
+          } = <any>valueData[format.field]?.values;
+          if(values === undefined) {
+            values = {};
+            valueData[format.field] = {
+              type: "discreet",
+              values: values
+            };
+          }
+          if(format.value.trim()) {
+            values[format.value.trim().toLowerCase()] = {
+              display: format.formattedValue,
+              value: format.value.trim().toLowerCase()
+            };
+          }
+        }
+        else if(type == "number") {
+          let values: [number, number] = <any>valueData[format.field]?.values;
+          if(values === undefined) {
+            values = [format.value, format.value];
+            valueData[format.field] = {
+              type: "continuous",
+              values: values
+            };
+          }
+          if(format.value < values[0]) {
+            values[0] = format.value;
+          }
+          if(format.value > values[1]) {
+            values[1] = format.value;
           }
         }
       }
     }
     this.fields = Object.values(fieldData);
-    this.values = valueData;
+    this.values = {};
+    //transform discreet valueData
+    for(let field in valueData) {
+      if(valueData[field].type == "discreet") {
+        this.values[field] = {
+          type: "discreet",
+          values: Object.values(valueData[field].values)
+        }
+      }
+      else {
+        this.values[field] = <any>valueData[field]
+      }
+    }
   }
   @Output() filtered: EventEmitter<Station[]> = new EventEmitter<Station[]>();
-  
+
   filterData: FilterData[];
-  fields: FormatData[];
-  values: {[field: string]: {display: string, value: string}[]};
+  fields: {
+    display: string,
+    value: string
+  }[];
+  values: {
+    [field: string]: {
+      type: "discreet",
+      values: {
+        display: string,
+        value: string
+      }[]
+    } | {
+      type: "continuous",
+      values: [number, number]
+    }
+  };
 
   constructor() {
     this.filterData = [];
@@ -64,7 +132,7 @@ export class StationFilterComponent implements OnInit {
   ngOnInit() {
   }
 
-  private filterStations(stations: Station[], filters: StationFilter[]) {
+  private filterStations(stations: Station[], filters: StationFilter<unknown>[]) {
     this._filteredStations = stations.filter((station: Station) => {
       let include = true;
       for(let filter of filters) {
@@ -79,7 +147,7 @@ export class StationFilterComponent implements OnInit {
   }
 
   private filterAll() {
-    let filters = this.filterData.reduce((acc: StationFilter[], data: FilterData) => {
+    let filters = this.filterData.reduce((acc: StationFilter<unknown>[], data: FilterData) => {
       if(data.filter !== null) {
         acc.push(data.filter);
       }
@@ -96,16 +164,15 @@ export class StationFilterComponent implements OnInit {
       valueSub: null,
       filter: null
     };
-    
+
     filterData.fieldSub = filterData.fieldControl.valueChanges.subscribe((field: string) => {
       filterData.valueControl.setValue([]);
-      if(filterData.filter !== null) {
-        filterData.filter.field = field;
-      }
     });
-    filterData.valueSub = filterData.valueControl.valueChanges.subscribe((values: string[]) => {
+    filterData.valueSub = filterData.valueControl.valueChanges.subscribe((values: string[] | [number, number]) => {
+      let filter = this.values[filterData.fieldControl.value].type == "discreet" ? new DiscreetFilter(filterData.fieldControl.value, <string[]>values) : new ContinuousFilter(filterData.fieldControl.value, <[number, number]>values);
+
       if(filterData.filter === null && values.length > 0) {
-        filterData.filter = new StationFilter(filterData.fieldControl.value, values);
+        filterData.filter = filter;
         this.filterStations(this._filteredStations, [filterData.filter]);
       }
       else if(values.length == 0) {
@@ -113,7 +180,7 @@ export class StationFilterComponent implements OnInit {
         this.filterAll();
       }
       else {
-        filterData.filter.values = values;
+        filterData.filter = filter;
         this.filterAll();
       }
     });
@@ -146,8 +213,8 @@ export class StationFilterComponent implements OnInit {
     this.filterAll();
   }
 
-  private getFilters(): StationFilter[] {
-    let filters: StationFilter[] = this.filterData.reduce((acc: StationFilter[], filterData: FilterData) => {
+  private getFilters(): StationFilter<any>[] {
+    let filters: StationFilter<unknown>[] = this.filterData.reduce((acc: StationFilter<unknown>[], filterData: FilterData) => {
       if(filterData.filter !== null) {
         acc.push(filterData.filter);
       }
@@ -162,32 +229,41 @@ interface FilterData {
   valueControl: FormControl,
   fieldSub: Subscription,
   valueSub: Subscription,
-  filter: StationFilter
+  filter: StationFilter<unknown>
 }
 
-class StationFilter {
-  private _values: Set<string>;
-  private _field: string;
+abstract class StationFilter<T> {
+  protected _values: T;
+  protected _field: string;
 
+  constructor(field: string, values: T) {
+    this._field = field;
+    this._values = values;
+  }
+
+  abstract match(station: Station): boolean;
+}
+
+class DiscreetFilter extends StationFilter<Set<string>> {
   constructor(field: string, values: string[]) {
-    this._field = field;
-    this._values = new Set<string>(values);
-  }
-
-  set field(field: string) {
-    this._field = field;
-  }
-
-  set values(values: string[]) {
-    this._values = new Set<string>(values);
+    super(field, new Set<string>(values));
   }
 
   match(station: Station): boolean {
     let value = <string>station.metadata.getValue(this._field);
-    if(typeof value == "string") {
-      //convert string values to lowercase, case insensitive
-      value = value.toLowerCase();
-    }
+    //convert string values to lowercase, case insensitive
+    value = value.trim().toLowerCase();
     return this._values.has(value);
+  }
+}
+
+class ContinuousFilter extends StationFilter<[number, number]> {
+  constructor(field: string, values: [number, number]) {
+    super(field, values);
+  }
+
+  match(station: Station): boolean {
+    let value = <number>station.metadata.getValue(this._field);
+    return value >= this._values[0] && value <= this._values[1]
   }
 }

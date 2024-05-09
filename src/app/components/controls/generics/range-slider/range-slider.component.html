@@ -1,10 +1,11 @@
 <div class="container">
   <div class="input-container">
-    <mat-form-field [style.width]="'50px'">
+    <mat-form-field [style.width]="'60px'">
       <mat-label>Min Value</mat-label>
       <input [formControl]="sliderComponents.left.control" matInput>
     </mat-form-field>
   </div>
+
   <div class="slider-container">
     <div #track class="track">
       <div #sliderL class="slider left-slider"></div>
@@ -14,7 +15,7 @@
   </div>
 
   <div class="input-container">
-    <mat-form-field [style.width]="'50px'">
+    <mat-form-field [style.width]="'60px'">
       <mat-label>Max Value</mat-label>
       <input [formControl]="sliderComponents.right.control" matInput>
     </mat-form-field>
