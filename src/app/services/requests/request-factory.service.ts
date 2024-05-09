@@ -13,8 +13,8 @@ import { TimeseriesData } from '../dataset-form-manager.service';
 export class RequestFactoryService {
   //decouple for easy testing of API changes
   static readonly API_KEYS = {
-    hcdp: "cistore",
-    tapis: "cistore"
+    hcdp: "hcdp_api",
+    tapis: "hcdp_api"
   };
 
   static readonly GEOTIFF_NODATA = -3.3999999521443642e+38;
