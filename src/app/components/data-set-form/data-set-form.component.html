@@ -8,7 +8,26 @@
         <h3 class="subh3">
           Select The Dataset You Would Like to View.
         </h3>
-        <div class="control-group">
+
+        <div #tabContainer class="dataset-tabs">
+          <mat-tab-group id="t1" #t1 [(selectedIndex)]="t1i" (selectedIndexChange)="changeDataset($event)">
+            <mat-tab *ngFor="let group of formData.datasetFormData.datasetGroups" [label]="group.label"> 
+              <mat-tab-group #t2 [(selectedIndex)]="t2i" (selectedIndexChange)="changeDataset(t1.selectedIndex, $event)">
+                <mat-tab *ngFor="let value of group.values" [label]="value.label">
+                  <template *ngTemplateOutlet="form"></template>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-tab>
+            <mat-tab *ngFor="let value of formData.datasetFormData.datasetValues" [label]="value.label"> 
+              <template *ngTemplateOutlet="form"></template>
+            </mat-tab> 
+          </mat-tab-group>
+        </div>
+        
+
+
+
+        <!-- <div class="control-group">
           <div class="control">
             <app-selector
               [label]="formData.datasetFormData.label"
@@ -18,7 +37,15 @@
               [control]="controls.datatype"
             ></app-selector>
           </div>
-        </div>
+        </div> -->
+
+
+
+
+        
+      <div class="spacer"></div>
+
+      <ng-template #form>
         <div class="control-group control-subgroup">
           <div
             *ngFor="let field of formData.datasetItem.formData.default"
@@ -61,14 +88,14 @@
             </div>
           </div>
         </div>
+
         <div *ngIf="formData.datasetItem.coverageLabel" class="control-group">
           <div class="control">
             <h4 class="coverage-label">Dataset Coverage</h4>
             {{formData.datasetItem.coverageLabel}}
           </div>
         </div>
-      </div>
-      <div class="spacer"></div>
+      </ng-template>
 
       <button mat-raised-button color="primary" (click)="updateDataset()">
         Submit

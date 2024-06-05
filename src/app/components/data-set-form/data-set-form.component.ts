@@ -1,8 +1,9 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import {EventParamRegistrarService} from "../../services/inputManager/event-param-registrar.service";
 import { FormControl } from '@angular/forms';
 import { ActiveFormData, DatasetFormManagerService, FocusData, FormManager, FormNode, VisDatasetItem } from 'src/app/services/dataset-form-manager.service';
 import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-data-set-form',
@@ -11,6 +12,13 @@ import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataSetFormComponent implements OnInit, AfterViewInit {
+  @ViewChild("t1", {static: false}) t1: MatTabGroup;
+  @ViewChild("t2", {static: false}) t2: MatTabGroup;
+  
+  @ViewChild("tabContainer", {static: true}) tabContainer: ElementRef;
+  t1i = 1;
+  t2i = 0;
+
   formData: ActiveFormData<VisDatasetItem>;
   controls: {[field: string]: FormControl};
   debounce: boolean = false;
@@ -31,6 +39,21 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
     this.controls = {}
     this.setControlValues(formData.values);
     this.updateDataset();
+  }
+
+  changeDataset(t1i: number, t2i: number = -1) {
+    console.log(this.t1, this.t2);
+    let datatype = null;
+    if(t1i < this.formData.datasetFormData.datasetGroups.length && t2i >= 0) {
+      console.log(t2i);
+      datatype = this.formData.datasetFormData.datasetGroups[t1i].values[t2i].tag;
+    }
+    else if(t1i >= this.formData.datasetFormData.datasetGroups.length) {
+      t1i -= this.formData.datasetFormData.datasetGroups.length;
+      console.log(t1i, this.formData.datasetFormData.datasetValues);
+      datatype = this.formData.datasetFormData.datasetValues[t1i].tag;
+    }
+    this.controls.datatype.setValue(datatype);
   }
 
   setControlValues(values: StringMap) {
@@ -82,6 +105,39 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    // setTimeout(() => {
+    //   this.t1._handleClick(this.t1._tabs.first, {
+    //     _alignInkBarToSelectedTab: () => {},
+    //     focusIndex: 1
+    //   }, this.t1._tabs.first.position);
+    // }, 100);
+    let mouseEvent = new MouseEvent("click", {
+      view: window,
+      bubbles: true,
+    });
+    console.log(document.getElementById("t1").firstChild.childNodes[1].firstChild.firstChild.childNodes[1]);
+    //document.getElementById("t1").firstChild.childNodes[1].firstChild.firstChild.childNodes[1].dispatchEvent(mouseEvent);
+    setTimeout(() => {
+      // console.log("click!");
+      // console.log(document.getElementById("t1").firstChild.childNodes[1].firstChild.firstChild.lastChild);
+      // document.getElementById("t1").firstChild.childNodes[1].firstChild.firstChild.childNodes[1].dispatchEvent(mouseEvent);
+      // let bounds = document.getElementById("t1").getBoundingClientRect();
+      // console.log(bounds);
+      
+      // let element = document.elementFromPoint(bounds.left, bounds.top);
+      // element.dispatchEvent(mouseEvent);
+
+    }, 5000);
+    
+
+    // let tabContainerEl: HTMLElement = this.tabContainer.nativeElement;
+    // let firstTab: Element = <HTMLElement>tabContainerEl.children[0];
+    // console.log(tabContainerEl.bo);
+    
+    // console.log(this.t1);
+    // console.log(this.t1._tabs.first);
+    // // this.t1._tabs.first.isActive = false;
+    // // this.t1._tabs.first.isActive = true;
   }
 
   updateDataset() {

@@ -73,6 +73,7 @@ import { DateGroupSelectorComponent } from './components/controls/date-group-sel
 import { FocusControlComponent } from './components/controls/focus-control/focus-control.component';
 import { StationFilterComponent } from './components/station-filter/station-filter.component';
 import { SelectorComponent } from './components/controls/selector/selector.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -142,7 +143,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MatProgressSpinnerModule,
     PlotlyModule,
     MatDialogModule,
-    DragDropModule
+    DragDropModule,
+    MatTabsModule
   ],
   entryComponents: [
     ExportUnimplementedComponent,
