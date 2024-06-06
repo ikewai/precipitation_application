@@ -9,21 +9,21 @@
           Select The Dataset You Would Like to View.
         </h3>
 
-        <div #tabContainer class="dataset-tabs">
-          <mat-tab-group id="t1" #t1 [(selectedIndex)]="t1i" (selectedIndexChange)="changeDataset($event)">
-            <mat-tab *ngFor="let group of formData.datasetFormData.datasetGroups" [label]="group.label"> 
-              <mat-tab-group #t2 [(selectedIndex)]="t2i" (selectedIndexChange)="changeDataset(t1.selectedIndex, $event)">
+        <div #tabContainer>
+          <mat-tab-group #t1 id="t1" class="t1-tabs" (selectedIndexChange)="changeDataset()">
+            <mat-tab *ngFor="let group of formData.datasetFormData.datasetGroups" [label]="group.label">
+              <mat-tab-group #t2 id="t2" class="t2-tabs" (selectedIndexChange)="changeDataset()">
                 <mat-tab *ngFor="let value of group.values" [label]="value.label">
                   <template *ngTemplateOutlet="form"></template>
                 </mat-tab>
               </mat-tab-group>
             </mat-tab>
-            <mat-tab *ngFor="let value of formData.datasetFormData.datasetValues" [label]="value.label"> 
+            <mat-tab *ngFor="let value of formData.datasetFormData.datasetValues" [label]="value.label">
               <template *ngTemplateOutlet="form"></template>
-            </mat-tab> 
+            </mat-tab>
           </mat-tab-group>
         </div>
-        
+
 
 
 
@@ -42,7 +42,7 @@
 
 
 
-        
+
       <div class="spacer"></div>
 
       <ng-template #form>

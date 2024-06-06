@@ -81,6 +81,18 @@ mat-icon {
   white-space: nowrap;
 }
 
-.dataset-tabs {
-  width: 100%;
+.t1-tabs {
+  width: 500px;
 }
+
+.t2-tabs {
+  padding-left: 36px;
+}
+
+// ::ng-deep .t1-tabs .mat-tab-label {
+//   scale: 1.2;
+// }
+
+// ::ng-deep .t2-tabs .mat-tab-label {
+//   scale: 0.9;
+// }
