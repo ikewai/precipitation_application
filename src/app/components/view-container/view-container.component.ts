@@ -178,7 +178,6 @@ export class ViewContainerComponent implements OnInit {
         else {
           this.activeTileRef = inContainer.focus;
         }
-
       }, this.scrollTimeout);
     }
   }

@@ -1,6 +1,7 @@
 .container {
   display: inline-block;
-  width: fit-content;
+  width: 100%;
+  min-width: fit-content;
   height: 100%;
 }
 
@@ -82,17 +83,18 @@ mat-icon {
 }
 
 .t1-tabs {
-  width: 500px;
+  min-width: 500px;
 }
 
 .t2-tabs {
   padding-left: 36px;
 }
 
-// ::ng-deep .t1-tabs .mat-tab-label {
-//   scale: 1.2;
-// }
+.form-body {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
 
-// ::ng-deep .t2-tabs .mat-tab-label {
-//   scale: 0.9;
-// }
+.tab-label {
+  cursor: pointer;
+}

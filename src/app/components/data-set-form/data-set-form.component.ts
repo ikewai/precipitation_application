@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef, Input } from '@angular/core';
 import {EventParamRegistrarService} from "../../services/inputManager/event-param-registrar.service";
 import { FormControl } from '@angular/forms';
 import { ActiveFormData, DatasetFormManagerService, FocusData, FormManager, FormNode, VisDatasetItem } from 'src/app/services/dataset-form-manager.service';
@@ -12,8 +12,19 @@ import { MatTabGroup } from '@angular/material/tabs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataSetFormComponent implements OnInit, AfterViewInit {
+  _width: number;
+  //ensure tab resize repaginates
+  @Input() set width(width: number) {
+    setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+    }, 0);
+    this._width = width;
+  }
+
   @ViewChild("t1", {static: false}) t1: MatTabGroup;
   @ViewChild("t2", {static: false}) t2: MatTabGroup;
+  @ViewChild("tabContainer", {static: false}) tabContainer: ElementRef;
+  @ViewChild("container", {static: false}) container: ElementRef;
 
   formData: ActiveFormData<VisDatasetItem>;
   controls: {[field: string]: FormControl};
@@ -35,37 +46,37 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
     this.controls = {}
     this.setControlValues(formData.values);
     this.updateDataset();
+    formData.datasetFormData.datasetGroups[0].values[0].description
+    formData.datasetFormData.datasetGroups[0].description
+  }
+
+  respondToVisibility(element: HTMLElement, callback: (intersects: boolean, observer: IntersectionObserver) => any) {
+    let options = {
+      root: document.documentElement
+    };
+  
+    let observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        callback(entry.intersectionRatio > 0, observer);
+      });
+    }, options);
+  
+    observer.observe(element);
   }
 
   changeDataset() {
-    this.simClick();
+    window.dispatchEvent(new Event("resize"));
     let t1i = this.t1.selectedIndex;
     let t2i = this.t2.selectedIndex;
     let datatype = null;
     if(t1i < this.formData.datasetFormData.datasetGroups.length) {
-      console.log(t2i);
       datatype = this.formData.datasetFormData.datasetGroups[t1i].values[t2i].tag;
     }
     else {
       t1i -= this.formData.datasetFormData.datasetGroups.length;
-      console.log(t1i, this.formData.datasetFormData.datasetValues);
       datatype = this.formData.datasetFormData.datasetValues[t1i].tag;
     }
     this.controls.datatype.setValue(datatype);
-  }
-
-  simClick() {
-    let t2 = document.getElementById("t2");
-    let bounds = t2.getBoundingClientRect();
-    let mouseEvent = new MouseEvent("click", {
-      view: window,
-      bubbles: true,
-      clientX: bounds.x + 1,
-      clientY: bounds.y + 1
-    });
-    let element = document.elementFromPoint(bounds.x + 1, bounds.y + 1);
-    element.dispatchEvent(mouseEvent);
-    console.log(bounds);
   }
 
   setControlValues(values: StringMap) {
@@ -116,7 +127,15 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+    let element = this.tabContainer.nativeElement;
+    this.respondToVisibility(element, (intersects, observer) => {
+      if(intersects) {
+        window.dispatchEvent(new Event("resize"));
+        observer.unobserve(element);
+      }
+    });
+  }
 
   updateDataset() {
     this.changes = false;

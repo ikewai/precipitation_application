@@ -282,7 +282,6 @@ export class MapComponent implements OnInit {
       }
       this.dataLayers = {};
       this.active.data.raster = raster;
-
       //no raster for dataset, remove layers
       if(this.rasterLayerActive && raster === null) {
         this.rasterLayerActive = false;
@@ -340,6 +339,14 @@ export class MapComponent implements OnInit {
     });
 
     this.invalidateSize()
+  }
+
+  isExperimental() {
+    let experimental = false;
+    if(this.dataset && !this.loading) {
+      experimental = this.dataset.rasterParams.datatype == "rainfall" && this.dataset.rasterParams.period == "day" && this.active.data.raster.getBands()["0"].size > 0;
+    }
+    return experimental;
   }
 
   selectLocation(location: MapLocation) {

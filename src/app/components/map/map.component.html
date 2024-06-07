@@ -1,37 +1,42 @@
-<div #mapElement leaflet class="map"
-  [leafletOptions]="options"
-  (leafletMapReady)="onMapReady($event)">
+<div class="container">
+  <app-experimental-banner *ngIf="isExperimental()"></app-experimental-banner>
+  <div class="map-container">
+    <div #mapElement leaflet class="map"
+      [leafletOptions]="options"
+      (leafletMapReady)="onMapReady($event)">
+    </div>
+    <app-leaflet-layer-control-extension #layerController
+      [map]="map"
+      [opacity]="opacity"
+      (opacityChange)="setOpacity($event)"
+      (colorScheme)="setColorScheme($event)"
+      defaultScheme="viridis"
+      [reverseColors]="dataset.reverseColors"
+      [dataRange]="dataset.dataRange"
+      [displayStyle]="dataset.displayStyle"
+    ></app-leaflet-layer-control-extension>
+    <app-leaflet-color-scale
+      [map]="map"
+      [colorScale]="colorScheme"
+      [datatype]="dataset.dataypeLabel"
+      [units]="dataset.unitsShort"
+      [rangeAbsolute]="dataset.rangeAbsolute"
+    ></app-leaflet-color-scale>
+    <app-leaflet-compass-rose
+      [map]="map"
+      [options]="roseOptions">
+    </app-leaflet-compass-rose>
+    <app-header-control
+      [map]="map"
+      [dataset]="dataset.label"
+      [date]="active.data.focus?.label">
+    </app-header-control>
+    <app-leaflet-image-export
+      [map]="map"
+      [imageContainer]="imageContainer"
+      [hiddenControls]="imageHiddenControls">
+    </app-leaflet-image-export>
+  </div>
 </div>
-<app-leaflet-layer-control-extension #layerController
-  [map]="map"
-  [opacity]="opacity"
-  (opacityChange)="setOpacity($event)"
-  (colorScheme)="setColorScheme($event)"
-  defaultScheme="viridis"
-  [reverseColors]="dataset.reverseColors"
-  [dataRange]="dataset.dataRange"
-  [displayStyle]="dataset.displayStyle"
-></app-leaflet-layer-control-extension>
-<app-leaflet-color-scale
-  [map]="map"
-  [colorScale]="colorScheme"
-  [datatype]="dataset.dataypeLabel"
-  [units]="dataset.unitsShort"
-  [rangeAbsolute]="dataset.rangeAbsolute"
-></app-leaflet-color-scale>
-<app-leaflet-compass-rose
-  [map]="map"
-  [options]="roseOptions">
-</app-leaflet-compass-rose>
-<app-header-control
-  [map]="map"
-  [dataset]="dataset.label"
-  [date]="active.data.focus?.label">
-</app-header-control>
-<app-leaflet-image-export
-  [map]="map"
-  [imageContainer]="imageContainer"
-  [hiddenControls]="imageHiddenControls">
-</app-leaflet-image-export>
 
 

@@ -74,6 +74,7 @@ import { FocusControlComponent } from './components/controls/focus-control/focus
 import { StationFilterComponent } from './components/station-filter/station-filter.component';
 import { SelectorComponent } from './components/controls/selector/selector.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import { ExperimentalBannerComponent } from './components/leaflet-controls/experimental-banner/experimental-banner.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -112,7 +113,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     DateGroupSelectorComponent,
     FocusControlComponent,
     StationFilterComponent,
-    SelectorComponent
+    SelectorComponent,
+    ExperimentalBannerComponent
   ],
   imports: [
     MatProgressBarModule,
