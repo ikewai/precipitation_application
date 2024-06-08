@@ -31,12 +31,8 @@ p {
   padding-left: 20px;
 }
 
-.control-group {
-  padding-top: 20px;
-}
-
 .spacer {
-  height: 20px;
+  height: 10px;
   clear: both;
 }
 
@@ -61,10 +57,6 @@ mat-icon {
   padding-left: 10px;
 }
 
-.form-container {
-  display: inline-flex;
-}
-
 .sep {
   width: 1px;
   background-color: gray;
@@ -72,6 +64,7 @@ mat-icon {
 
 .ds-form {
   padding-right: 20px;
+  padding-bottom: 30px;
 }
 
 .instant-props {
@@ -87,15 +80,19 @@ mat-icon {
   max-width: fit-content;
 }
 
-.t2-tabs {
+.subform {
   padding-left: 36px;
 }
 
 .form-body {
   padding-top: 30px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
 
 .tab-label {
   cursor: pointer;
+}
+
+.form-left {
+  padding-right: 20px;
 }
