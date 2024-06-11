@@ -2,114 +2,106 @@
   <h3>
     Active Dataset: {{label}}
   </h3>
-  <div class="form-container">
-    <div class="ds-form">
-      <div>
-        <h3 class="subh3">
-          Select The Dataset You Would Like to View.
-        </h3>
+  <div *ngIf="optionNodes.length > 0">
+    <h3 class="subh3">
+      Display Options
+    </h3>
+    <div class="instant-props">
+      <div *ngFor="let item of optionNodes">
+        <app-selector
+          [label]="item.node.label"
+          [tooltip]="item.node.description"
+          [values]="item.node.values"
+          [control]="item.control"
+        ></app-selector>
+      </div>
+    </div>
+  </div>
+  <div class="ds-form">
+    <h3 class="subh3">
+      Select The Dataset You Would Like to View
+    </h3>
 
-        <div #tabContainer>
-          <mat-tab-group #t1 dynamicHeight dynamic id="t1" class="t1-tabs" (selectedIndexChange)="changeDataset()" [style.width.px]="_width - 20">
-            <mat-tab *ngFor="let group of formData.datasetFormData.datasetGroups" [matTooltip]="group.description">
-              <ng-template mat-tab-label>
-                <label class="tab-label" [matTooltip]="group.description">{{group.label}}</label>
-              </ng-template>
-              <mat-tab-group #t2 dynamicHeight id="t2" class="t2-tabs" (selectedIndexChange)="changeDataset()">
-                <mat-tab *ngFor="let value of group.values" [matTooltip]="value.description">
-                  <ng-template mat-tab-label>
-                    <label class="tab-label" [matTooltip]="value.description">{{value.label}}</label>
-                  </ng-template>
-                  <template *ngTemplateOutlet="form"></template>
-                </mat-tab>
-              </mat-tab-group>
-            </mat-tab>
-            <mat-tab *ngFor="let value of formData.datasetFormData.datasetValues">
+    <div #tabContainer>
+      <mat-tab-group #t1 dynamicHeight dynamic id="t1" class="t1-tabs" (selectedIndexChange)="changeDataset()" [style.width.px]="_width - 20">
+        <mat-tab *ngFor="let group of formData.datasetFormData.datasetGroups" [matTooltip]="group.description">
+          <ng-template mat-tab-label>
+            <label class="tab-label" [matTooltip]="group.description">{{group.label}}</label>
+          </ng-template>
+          <mat-tab-group #t2 dynamicHeight id="t2" class="subform" (selectedIndexChange)="changeDataset()">
+            <mat-tab *ngFor="let value of group.values" [matTooltip]="value.description">
               <ng-template mat-tab-label>
                 <label class="tab-label" [matTooltip]="value.description">{{value.label}}</label>
               </ng-template>
               <template *ngTemplateOutlet="form"></template>
             </mat-tab>
           </mat-tab-group>
-        </div>
-
-      <ng-template #form matTabContent>
-        <div class="form-body">
-          <div class="control-group">
-            <div
-              *ngFor="let field of formData.datasetItem.formData.default"
-              class="control">
-                <app-selector
-                  [label]="field.label"
-                  [tooltip]="field.description"
-                  [values]="field.values"
-                  [control]="controls[field.tag]"
-                ></app-selector>
-            </div>
+        </mat-tab>
+        <mat-tab *ngFor="let value of formData.datasetFormData.datasetValues">
+          <ng-template mat-tab-label>
+            <label class="tab-label" [matTooltip]="value.description">{{value.label}}</label>
+          </ng-template>
+          <div class="subform">
+            <template *ngTemplateOutlet="form"></template>
           </div>
-  
-          <div
-            *ngFor="let category of formData.datasetItem.formData.categorized"
-            class="control-group">
-            <div class="category-label">
-              <h4 class="inline-block">
-                {{category.label}}
-              </h4>
-              <mat-icon
-                aria-hidden="false"
-                aria-label="Tooltip"
-                matTooltipPosition="right"
-                [matTooltip]="category.description"
-                inline="true">
-                help
-              </mat-icon>
-            </div>
-            <div class="control-subgroup">
-              <div
-                *ngFor="let field of category.nodes"
-                class="control">
-                <app-selector
-                  [label]="field.label"
-                  [tooltip]="field.description"
-                  [values]="field.values"
-                  [control]="controls[field.tag]"
-                ></app-selector>
-              </div>
-            </div>
-          </div>
-  
-          <div *ngIf="formData.datasetItem.coverageLabel" class="control-group">
-            <div class="control">
-              <h4 class="coverage-label">Dataset Coverage</h4>
-              {{formData.datasetItem.coverageLabel}}
-            </div>
-          </div>
-        </div>
-      </ng-template>
-
-      <button mat-raised-button color="primary" (click)="updateDataset()">
-        Submit
-      </button>
-      <p *ngIf="changes" class="submit-note">
-        Click Submit to Apply These Changes
-      </p>
+        </mat-tab>
+      </mat-tab-group>
     </div>
 
-    <div class="form-container" *ngIf="optionNodes.length > 0">
-      <div class="sep"></div>
-      <div class="instant-props">
-        <h3 class="subh3">
-          Display Options
-        </h3>
-        <div *ngFor="let item of optionNodes">
-          <app-selector
-            [label]="item.node.label"
-            [tooltip]="item.node.description"
-            [values]="item.node.values"
-            [control]="item.control"
-          ></app-selector>
+    <ng-template #form matTabContent>
+      <div class="form-body">
+        <div *ngFor="let field of formData.datasetItem.formData.default" class="control">
+            <app-selector
+              [label]="field.label"
+              [tooltip]="field.description"
+              [values]="field.values"
+              [control]="controls[field.tag]"
+            ></app-selector>
+        </div>
+
+        <div *ngFor="let category of formData.datasetItem.formData.categorized">
+          <div class="category-label">
+            <h4 class="inline-block">
+              {{category.label}}
+            </h4>
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Tooltip"
+              matTooltipPosition="right"
+              [matTooltip]="category.description"
+              inline="true">
+              help
+            </mat-icon>
+          </div>
+          <div class="control-subgroup">
+            <div
+              *ngFor="let field of category.nodes"
+              class="control">
+              <app-selector
+                [label]="field.label"
+                [tooltip]="field.description"
+                [values]="field.values"
+                [control]="controls[field.tag]"
+              ></app-selector>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="formData.datasetItem.coverageLabel">
+          <div class="control">
+            <h4 class="coverage-label">Dataset Coverage</h4>
+            {{formData.datasetItem.coverageLabel}}
+          </div>
+          <div class="spacer"></div>
         </div>
       </div>
-    </div>
+    </ng-template>
+
+    <button mat-raised-button color="primary" (click)="updateDataset()">
+      Submit
+    </button>
+    <p *ngIf="changes" class="submit-note">
+      Click Submit to Apply These Changes
+    </p>
   </div>
 </div>
