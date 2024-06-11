@@ -205,7 +205,9 @@ export class RainfallGraphComponent implements OnInit {
             dedupValues.push(values[i]);
           }
         }
-        values = dedupValues;
+        if(dedupValues.length > 0) {
+          values = dedupValues;
+        }
         let chunkStartDate = values[0].date;
         let chunkEndDate = values[values.length - 1].date;
 
