@@ -144,23 +144,7 @@ export class DataManagerService {
       return metadataMap;
     });
 
-    let selectedStation: Station = null;
 
-    this.paramService.createParameterHook(EventParamRegistrarService.EVENT_TAGS.stations, (stations: Station[]) => {
-      if(stations && selectedStation) {
-        let selected: Station = null;
-        for(let station of stations) {
-          if(station.id == selectedStation.id) {
-            selected = station;
-            break;
-          }
-        }
-        //delay to allow filtered station propogation before emitting
-        setTimeout(() => {
-          this.paramService.pushSelectedLocation(selected);
-        }, 0);
-      }
-    });
     this.paramService.createParameterHook(EventParamRegistrarService.EVENT_TAGS.dataset, (dataset: VisDatasetItem) => {
       this.dataset = dataset;
       //reset selected station and timeseries data

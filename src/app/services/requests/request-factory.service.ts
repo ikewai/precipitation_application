@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RequestService, RequestResults } from "./request.service";
+import { RequestService, RequestResults, ReqPriority } from "./request.service";
 import { RasterData } from '../../models/RasterData';
 import { DataProcessorService } from "../dataProcessor/data-processor.service";
 import moment from 'moment';
@@ -32,7 +32,7 @@ export class RequestFactoryService {
   //////////////
 
   async getRaster(params: any, printTiming: boolean = true, delay?: number): Promise<RequestResults> {
-    let response = await this.reqService.get(RequestFactoryService.API_KEYS.hcdp, "raster", "arraybuffer", params, undefined, undefined, delay);
+    let response = await this.reqService.get(RequestFactoryService.API_KEYS.hcdp, "raster", "arraybuffer", ReqPriority.HIGH, params, undefined, undefined, delay);
     let start = new Date().getTime();
     response.transformData((data: ArrayBuffer) => {
       if(printTiming) {
@@ -55,7 +55,7 @@ export class RequestFactoryService {
   }
 
   async submitEmailPackageReq(body: any, printTiming: boolean = true, delay?: number): Promise<RequestResults> {
-    let response = await this.reqService.post(RequestFactoryService.API_KEYS.hcdp, "email", "text", body, undefined, undefined, delay);
+    let response = await this.reqService.post(RequestFactoryService.API_KEYS.hcdp, "email", "text", body, ReqPriority.HIGH, undefined, undefined, delay);
     let start = new Date().getTime();
     response.transformData(() => {
       if(printTiming) {
@@ -66,7 +66,7 @@ export class RequestFactoryService {
   }
 
   async submitInstantDownloadReq(body: any, printTiming: boolean = true, delay?: number): Promise<RequestResults> {
-    let response = await this.reqService.post(RequestFactoryService.API_KEYS.hcdp, "splitlink", "json", body, undefined, undefined, delay);
+    let response = await this.reqService.post(RequestFactoryService.API_KEYS.hcdp, "splitlink", "json", body, ReqPriority.HIGH, undefined, undefined, delay);
     let start = new Date().getTime();
     response.transformData((response: any) => {
       if(printTiming) {
@@ -83,7 +83,7 @@ export class RequestFactoryService {
       start,
       end
     };
-    let response = await this.reqService.get(RequestFactoryService.API_KEYS.hcdp, "raster_timeseries", "json", params, undefined, undefined, delay);
+    let response = await this.reqService.get(RequestFactoryService.API_KEYS.hcdp, "raster_timeseries", "json", ReqPriority.MEDIUM, params, undefined, undefined, delay);
     let startTime = new Date().getTime();
     response.transformData((data: {[date: string]: number}) => {
       if(printTiming) {
@@ -116,7 +116,7 @@ export class RequestFactoryService {
   async getRasterHeader(properties: any, printTiming: boolean = true, delay?: number): Promise<RequestResults> {
     let query = this.propertiesToQuery("prew1", properties);
     let timingMessage = printTiming ? `Retreived raster header`: undefined;
-    let response = await this.tapisQueryDispatch(query, timingMessage, delay);
+    let response = await this.tapisQueryDispatch(query, ReqPriority.HIGH, timingMessage, delay);
     //extract first document
     response.transformData((response: any[]) => {
       let header = null;
@@ -133,14 +133,14 @@ export class RequestFactoryService {
     delete properties.dateRange;
     let query = this.propertiesToQuery("hcdp_station_value", properties);
     let timingMessage = printTiming ? `Retreived station data for ${properties.date}`: undefined;
-    let response = await this.tapisQueryDispatch(query, timingMessage, delay);
+    let response = await this.tapisQueryDispatch(query, ReqPriority.HIGH, timingMessage, delay);
     return response;
   }
 
   async getStationMetadata(properties: any, printTiming: boolean = true, delay?: number): Promise<RequestResults> {
     let query = this.propertiesToQuery("hcdp_station_metadata", properties);
     let timingMessage = printTiming ? `Retreived station metadata`: undefined;
-    let response = await this.tapisQueryDispatch(query, timingMessage, delay);
+    let response = await this.tapisQueryDispatch(query, ReqPriority.HIGH, timingMessage, delay);
     return response;
   }
 
@@ -148,7 +148,7 @@ export class RequestFactoryService {
     let query = this.propertiesToQuery("hcdp_station_value", properties);
     query = `{'$and':[${query},{'value.date':{'$gte':'${start}'}},{'value.date':{'$lt':'${end}'}}]}`;
     let timingMessage = printTiming ? `Retreived station ${properties.station_id} timeseries for ${start}-${end}`: undefined;
-    let response = await this.tapisQueryDispatch(query, timingMessage, delay);
+    let response = await this.tapisQueryDispatch(query, ReqPriority.MEDIUM, timingMessage, delay);
     response.transformData((data: any[]) => {
       if(data.length > 0) {
         let transformed: TimeseriesGraphData = {
@@ -170,13 +170,13 @@ export class RequestFactoryService {
     return response;
   }
 
-  private async tapisQueryDispatch(query: string, timingMessage?: string, delay?: number): Promise<RequestResults> {
+  private async tapisQueryDispatch(query: string, priority: ReqPriority, timingMessage?: string, delay?: number): Promise<RequestResults> {
     let params = {
       q: query,
       limit: 10000,
       offset: 0
     };
-    let response = await this.reqService.get(RequestFactoryService.API_KEYS.tapis, "metadata", "json", params, undefined, undefined, delay);
+    let response = await this.reqService.get(RequestFactoryService.API_KEYS.tapis, "metadata", "json", priority, params, undefined, undefined, delay);
     let start = new Date().getTime();
     response.transformData((response: any) => {
       //if provided with a timing message print timing

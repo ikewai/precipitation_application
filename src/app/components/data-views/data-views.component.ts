@@ -30,6 +30,8 @@ export class DataViewsComponent implements OnInit {
 
     paramService.createParameterHook(EventParamRegistrarService.EVENT_TAGS.filteredStations, (stations: Station[]) => {
       this.filteredStations = stations;
+      //reset selected, will be set again by map if exist
+      this.selected = null;
       this.loading = false;
     });
     paramService.createParameterHook(EventParamRegistrarService.EVENT_TAGS.selectedLocation, (location: MapLocation) => {

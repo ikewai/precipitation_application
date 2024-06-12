@@ -41,18 +41,17 @@ export class SiteAvailabilityTableComponent implements AfterViewInit {
   @Input() set selected(location: MapLocation) {
     this.location = location;
     if(location && location.type == "station") {
-      //the location is a station
-      let station = <Station>location;
-      let index = this.siteMap[station.id];
-      //only select if station exists in table
-      if(index !== undefined) {
-        //give time to propogate new station data if changing date
-        setTimeout(() => {
+      //give time to propogate new station data if changing date
+      setTimeout(() => {
+        //the location is a station
+        let station = <Station>location;
+        let index = this.siteMap[station.id];
+        //only select if station exists in table
+        if(index !== undefined) {
           this.selectFromTable(index);
           this.cdr.detectChanges();
-        }, 0);
-        
-      }
+        }
+      }, 0);
     }
     else {
       if(this.selectedRef !== undefined) {
@@ -120,7 +119,6 @@ export class SiteAvailabilityTableComponent implements AfterViewInit {
     if(this.selectedRef !== undefined) {
       this.selectedRef.selected = false;
     }
-
     this.selectedRef = this.tableData.rows[rowIndex];
     let selectedEl = this.selectedRef.element.nativeElement;
     let position = selectedEl.offsetTop - 30;

@@ -12,12 +12,11 @@ import { ErrorPopupService } from 'src/app/services/errorHandling/error-popup.se
 export class RequestService {
   private static readonly CONFIG_FILE = "api_config.json";
   private static readonly MAX_REQS = 5;
-  static readonly MAX_URI = 2000;
-  static readonly MAX_POINTS = 10000;
-
 
   private initPromise: Promise<Config>;
-  private reqQueue: Queue<RequestExecutor>;
+  //add priority queueing
+  //probably make into class
+  private reqQueue: PriorityQueue<RequestExecutor>;
   private reqs: Set<RequestExecutor>;
 
 
@@ -29,7 +28,7 @@ export class RequestService {
       this.errorPop.notify("error", `An unexpected error occured. Unable to retrieve API config.`);
     });
 
-    this.reqQueue = new Queue<RequestExecutor>();
+    this.reqQueue = new PriorityQueue<RequestExecutor>(3);
     this.reqs = new Set<RequestExecutor>();
   }
 
@@ -55,15 +54,14 @@ export class RequestService {
   }
 
 
-  private queue(req: RequestExecutor) {
-    
+  private queue(req: RequestExecutor, priority: ReqPriority) {
     //if the execution set has room execute the request
     if(this.reqs.size < RequestService.MAX_REQS) {
       this.exec(req);
     }
     //otherwise put in queue
     else {
-      this.reqQueue.enqueue(req);
+      this.reqQueue.enqueue(req, priority);
     }
   }
 
@@ -112,7 +110,7 @@ export class RequestService {
     return apiData;
   }
 
-  async post(apiID: string, endpoint: string, responseType: string, body: Object, headerData: StringMap = {}, retry: number = 3, delay: number = 0): Promise<RequestResults> {
+  async post(apiID: string, endpoint: string, responseType: string, body: Object, priority: ReqPriority, headerData: StringMap = {}, retry: number = 3, delay: number = 0): Promise<RequestResults> {
     let apiData = await this.getAPIData(apiID);
     //check list of endpoints, if string is not an id in the list, attempt to use as endpoint string directly
     endpoint = apiData.endpoints[endpoint] ?? endpoint;
@@ -132,10 +130,10 @@ export class RequestService {
     };
 
     let executor = new RequestExecutor(this.http, ReqType.POST, reqData, retry);
-    return this.handleExecutor(executor, delay);
+    return this.handleExecutor(executor, priority, delay);
   }
 
-  async get(apiID: string, endpoint: string, responseType: string, params: Object = {}, headerData: StringMap = {}, retry: number = 3, delay: number = 0): Promise<RequestResults> {
+  async get(apiID: string, endpoint: string, responseType: string, priority: ReqPriority, params: Object = {}, headerData: StringMap = {}, retry: number = 3, delay: number = 0): Promise<RequestResults> {
     let apiData = await this.getAPIData(apiID);
     //check list of endpoints, if string is not an id in the list, attempt to use as endpoint string directly
     endpoint = apiData.endpoints[endpoint] ?? endpoint;
@@ -153,12 +151,12 @@ export class RequestService {
     };
 
     let executor = new RequestExecutor(this.http, ReqType.GET, reqData, retry);
-    return this.handleExecutor(executor, delay);
+    return this.handleExecutor(executor, priority, delay);
   }
 
-  handleExecutor(executor: RequestExecutor, delay: number): RequestResults {
+  handleExecutor(executor: RequestExecutor, priority: ReqPriority, delay: number): RequestResults {
     let timeout = setTimeout(() => {
-      this.queue(executor);
+      this.queue(executor, priority);
     }, delay);
     let res = new RequestResults(executor);
     //if the request is cancelled stop timeout to prevent buildup if rapidly creating requests with delays (should have no effect if timeout already completed)
@@ -168,6 +166,46 @@ export class RequestService {
     return res;
   }
 }
+
+class PriorityQueue<T> {
+  private _size: number;
+  queues: Queue<T>[];
+  
+  constructor(depth: number) {
+    this.queues = [];
+    for(let i = 0; i < depth; i++) {
+      this.queues.push(new Queue<T>());
+    }
+    this._size = 0;
+  }
+
+  enqueue(item: T, priority: number): void {
+    this.queues[priority].enqueue(item);
+    this._size++;
+  }
+
+  dequeue(): T {
+    let next = null;
+    for(let queue of this.queues) {
+      if(queue.size > 0) {
+        next = queue.dequeue();
+        this._size--;
+        break;
+      }
+    }
+    return next;
+  }
+
+  get size(): number {
+    return this._size;
+  }
+}
+
+export enum ReqPriority {
+  HIGH,
+  MEDIUM,
+  LOW
+} 
 
 enum ReqType {
   POST,
