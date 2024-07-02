@@ -1,0 +1,22 @@
+[
+    {
+        "type": "group",
+        "file": "historical_rainfall/historical_rainfall.json"
+    },
+    {
+        "type": "group",
+        "file": "historical_temperature/historical_temperature.json"
+    },
+    {
+        "type": "group",
+        "file": "future_climate/future_climate.json"
+    },
+    {
+        "type": "type",
+        "file": "ndvi/ndvi.json"
+    },
+    {
+        "type": "type",
+        "file": "relative_humidity/ndvi.json"
+    }
+]

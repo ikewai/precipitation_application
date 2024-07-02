@@ -1,0 +1,6 @@
+{
+    "tag": "historical_temperature",
+    "label": "Historical Temperature",
+    "description": "Datasets using empirical temperature data.",
+    "datatypes": ["min_temp.json", "max_temp.json", "mean_temp.json"]
+}

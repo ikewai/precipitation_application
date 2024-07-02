@@ -1,0 +1,6 @@
+{
+    "tag": "historical_rainfall",
+    "label": "Historical Rainfall",
+    "description": "Datasets using empirical rainfall data.",
+    "datatypes": ["rainfall.json", "legacy_rainfall.json"]
+}

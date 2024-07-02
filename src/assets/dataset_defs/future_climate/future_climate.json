@@ -1,0 +1,6 @@
+{
+    "tag": "future_climate",
+    "label": "Future Climate Projections",
+    "description": "Future climate projections using downscaling prediction methods.",
+    "datatypes": ["rainfall_projections.json", "temperature_projections.json", "mean_temp.json"]
+}

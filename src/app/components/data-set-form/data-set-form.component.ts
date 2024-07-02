@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef, Input, ViewChildren, QueryList } from '@angular/core';
 import {EventParamRegistrarService} from "../../services/inputManager/event-param-registrar.service";
 import { FormControl } from '@angular/forms';
 import { ActiveFormData, DatasetFormManagerService, FocusData, FormManager, FormNode, VisDatasetItem } from 'src/app/services/dataset-form-manager.service';
@@ -22,7 +22,7 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
   }
 
   @ViewChild("t1", {static: false}) t1: MatTabGroup;
-  @ViewChild("t2", {static: false}) t2: MatTabGroup;
+  @ViewChildren("t2") t2: QueryList<MatTabGroup>;
   @ViewChild("tabContainer", {static: false}) tabContainer: ElementRef;
   @ViewChild("container", {static: false}) container: ElementRef;
 
@@ -67,7 +67,7 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
   changeDataset() {
     window.dispatchEvent(new Event("resize"));
     let t1i = this.t1.selectedIndex;
-    let t2i = this.t2.selectedIndex;
+    let t2i = this.t2.toArray()[t1i].selectedIndex;
     let datatype = null;
     if(t1i < this.formData.datasetFormData.datasetGroups.length) {
       datatype = this.formData.datasetFormData.datasetGroups[t1i].values[t2i].tag;
