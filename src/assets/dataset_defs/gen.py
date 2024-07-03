@@ -1,9 +1,9 @@
 from os.path import join
 from itertools import product
 
-base_dir = "./future_climate/rainfall"
+base_dir = "./historical_rainfall/legacy/sets"
 
-parts = [["dynamical", "statistical"], ["rcp45", "rcp85"], ["annual", "wet", "dry"], ["present", "mid", "late"]]
+parts = [["month"]]
 
 for group in product(*parts):
     fname = "_".join(group) + ".json"

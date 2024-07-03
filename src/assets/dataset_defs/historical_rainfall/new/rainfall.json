@@ -1,0 +1,9 @@
+{
+    "tag": "rainfall",
+    "label": "Rainfall",
+    "description": "Rainfall data (1990 - present).",
+    "selectors": {
+        
+    },
+    "sets": ["sets/day_partial.json", "sets/day_unfilled.json", "sets/month_partial.json"]
+}
