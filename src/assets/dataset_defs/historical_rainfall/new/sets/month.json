@@ -1,0 +1,34 @@
+{
+  "label": "Monthly Rainfall",
+  "selector": {
+    "period": "month"
+  },
+  "queryParams": {
+    "period": "month"
+  },
+  "defaultLayers": "",
+  "layers": [
+    {
+      "selectors": "stations",
+      "handlers": {
+        "query": "stations",
+        "display": "markers"
+      }
+    },
+    [
+      {
+        "handlers": {
+          "query": "anom",
+          "display": "raster"
+        }
+      },
+      {
+      "handlers": {
+        "query": "dataMap",
+        "display": "raster"
+      }
+    }]
+  ]
+}
+
+
