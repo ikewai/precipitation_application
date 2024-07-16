@@ -12,13 +12,26 @@
     "range": ["1990-01", null],
     "handler": "standard_month"
   },
+
   "colors": "sequential",
   "range": [0, 650],
-  "units": ["c", "f", "k"],
+  "units",
+
   "rangeCapped": [true, false],
   "experimental": false,
   "banner": null,
   "displayOptions": "data_map",
+
+  "data": [
+    {
+      "id": "stations",
+      "params": ["basic", "stations"],
+      "queryHandler": "stations",
+      "queryUnits": ["c"],
+      "conversionUnits": ["f", "k"]
+    }
+  ],
+
   "layers": [
     {
       "descriptor": "station_layer",
