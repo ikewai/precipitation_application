@@ -1,34 +1,77 @@
 {
-  "label": "Monthly Rainfall",
+  "name": "Monthly Rainfall",
+  "mapHeader": "Monthly Rainfall",
+  "variable": "Rainfall",
   "selector": {
     "period": "month"
   },
   "queryParams": {
     "period": "month"
   },
-  "defaultLayers": "",
+  "timeseries": {
+    "range": ["1990-01", null],
+    "handler": "standard_month"
+  },
+  "colors": "sequential",
+  "range": [0, 650],
+  "units": ["c", "f", "k"],
+  "rangeCapped": [true, false],
+  "experimental": false,
+  "banner": null,
+  "displayOptions": "data_map",
   "layers": [
     {
-      "selectors": "stations",
-      "handlers": {
-        "query": "stations",
-        "display": "markers"
-      }
-    },
-    [
-      {
-        "handlers": {
-          "query": "anom",
-          "display": "raster"
+      "descriptor": "station_layer",
+      "exclude": [],
+      "handlers": [
+        {
+          "params": ["basic", "stations"],
+          "display": "markers",
+          "query": "stations",
+          "interaction": "stations",
+          "units": "convert",
+          "overrides": {}
         }
-      },
-      {
-      "handlers": {
-        "query": "dataMap",
-        "display": "raster"
-      }
-    }]
+      ]
+    },
+    {
+      "descriptor": "data_map",
+      "exclude": [],
+      "handlers": [
+        {
+          "params": ["basic"],
+          "display": "raster",
+          "query": "dataMap",
+          "interaction": "raster",
+          "units": "convert",
+          "overrides": {}
+        }
+      ]
+    },
+    {
+      "descriptor": "anom",
+      "exclude": ["station_layer"],
+      "handlers": [
+        {
+          "params": ["basic"],
+          "display": "raster",
+          "query": "anom",
+          "interaction": "raster",
+          "units": null,
+          "overrides": {
+            "mapHeader": "Monthly Rainfall Anomaly",
+            "variable": "Anomaly",
+            "range": [-1, 1],
+            "rangeCapped": [true, true],
+            "units": null,
+            "colors": "sequential"
+          }
+        }
+      ]
+    }
+  ],
+  "layerGroups": [
+    ["station_layer"],
+    ["data_map", "anom"]
   ]
 }
-
-

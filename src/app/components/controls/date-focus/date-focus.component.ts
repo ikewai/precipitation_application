@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import Moment from 'moment';
 import {MatIconRegistry} from "@angular/material/icon";
 import { AssetManagerService } from 'src/app/services/util/asset-manager.service';
-import { TimeseriesData, UnitOfTime } from 'src/app/services/dataset-form-manager.service';
+import { TimeseriesData } from 'src/app/services/dataset-form-manager.service';
 
 @Component({
   selector: 'app-date-focus',

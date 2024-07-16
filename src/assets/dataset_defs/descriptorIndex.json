@@ -1,0 +1,347 @@
+[
+    {
+        "tag": "day",
+        "label": "Daily",
+        "description": "Data measured at a daily time scale."
+    },
+    {
+        "tag": "16day",
+        "label": "16 Day",
+        "description": "Data measured at a 16 day time scale."
+    },
+    {
+        "tag": "month",
+        "label": "Monthly",
+        "description": "Data measured at a monthly time scale."
+    },
+    {
+        "tag": "unfilled",
+        "label": "Unfilled",
+        "description": "Station data including only values provided by stations before going through QA/QC."
+    },
+    {
+        "tag": "partial",
+        "label": "Partial Filled",
+        "description": "This data has undergone QA/QC and is partially filled using statistical techniques to estimate some missing station values."
+    },
+    {
+        "tag": "dynamical",
+        "label": "Dynamical",
+        "description": "Dynamical downscaling uses high resolution regional climate models to extrapolate lower resolution global climate models down to an area of interest."
+    },
+    {
+        "tag": "statistical",
+        "label": "Statistical",
+        "description": "Statistical downscaling uses historical climatological data to statistically approximate future values."
+    },
+    {
+        "tag": "rcp45",
+        "label": "RCP 4.5",
+        "description": "A climate scenario assuming peak emissions around 2040. This scenario approximates a rise in global temperature by between 2.5 and 3\u00b0C by the year 2100."
+    },
+    {
+        "tag": "rcp85",
+        "label": "RCP 8.5",
+        "description": "A worst case climate scenario assuming continuously rising rates of emissions. This scenario approximates a rise in global temperature of about 5\u00b0C by the year 2100."
+    },
+    {
+        "tag": "annual",
+        "label": "Annual",
+        "description": "Includes all annual data."
+    },
+    {
+        "tag": "wet",
+        "label": "Wet",
+        "description": "Only includes data from the wet season."
+    },
+    {
+        "tag": "dry",
+        "label": "Dry",
+        "description": "Only includes data from the dry season."
+    },
+    {
+        "tag": "present",
+        "label": "Present Day",
+        "description": "Present day baseline values based on recorded climate data."
+    },
+    {
+        "tag": "mid",
+        "label": "Mid-Century (2040-2069)",
+        "description": "Mid-century (2040-2069) projections."
+    },
+    {
+        "tag": "late_s",
+        "label": "Late-Century (2070-2099)",
+        "description": "Late-century (2070-2099) projections."
+    },
+    {
+        "tag": "late_d",
+        "label": "Late-Century (2080-2099)",
+        "description": "Late-century (2080-2099) projections."
+    },
+    {
+        "tag": "statewide",
+        "label": "Statewide",
+        "description": "Data covering the entire state of Hawai\u02bbi."
+    },
+    {
+        "tag": "bi",
+        "label": "Hawai\u02bbi",
+        "description": "Data covering Hawai\u02bbi county."
+    },
+    {
+        "tag": "mn",
+        "label": "Maui",
+        "description": "Data covering Maui county."
+    },
+    {
+        "tag": "oa",
+        "label": "Honolulu",
+        "description": "Data covering Honolulu county."
+    },
+    {
+        "tag": "ka",
+        "label": "Kaua\u02bbi",
+        "description": "Data covering Kaua\u02bbi county."
+    },
+    {
+        "tag": "mm",
+        "label": "mm",
+        "description": "Values in millimeters"
+    },
+    {
+        "tag": "in",
+        "label": "in",
+        "description": "Values in inches"
+    },
+    {
+        "tag": "c",
+        "label": "\u00b0C",
+        "description": "Values in degrees celcius"
+    },
+    {
+        "tag": "f",
+        "label": "\u00b0F",
+        "description": "Values in degrees fahrenheit"
+    },
+    {
+        "tag": "k",
+        "label": "K",
+        "description": "Values in kelvin"
+    },
+    {
+        "tag": "percent",
+        "label": "%",
+        "description": "Percent change"
+    },
+    {
+        "tag": "percent_change",
+        "label": "Percent change",
+        "description": "Percent change in value relative to present day conditions."
+    },
+    {
+        "tag": "absolute",
+        "label": "Absolute change",
+        "description": "Change in value relative to present day conditions."
+    },
+    {
+        "tag": "direct",
+        "label": "Value",
+        "description": "Projected value"
+    },
+    {
+        "tag": "view",
+        "label": "View Type",
+        "description": "How should the data be viewed? Either view the data directly or relative to present conditions."
+    },
+    {
+        "tag": "period",
+        "label": "Time Period",
+        "description": "The time period over which the data is measured."
+    },
+    {
+        "tag": "fill",
+        "label": "Data Fill",
+        "description": "The type of processing the station data goes through."
+    },
+    {
+        "tag": "dsm",
+        "label": "Downscaling Method",
+        "description": "The type of downscaling climate model used for future projections."
+    },
+    {
+        "tag": "model",
+        "label": "Future Climate Model",
+        "description": "The climate model used to predict future data."
+    },
+    {
+        "tag": "season",
+        "label": "Season",
+        "description": "The season measurements and projections are made for."
+    },
+    {
+        "tag": "ds_period",
+        "label": "Data Period",
+        "description": "The period of coverage for the data to display, including baseline present day data and future projections"
+    },
+    {
+        "tag": "extent",
+        "label": "Spatial Extent",
+        "description": "The area of coverage for the data."
+    },
+    {
+        "tag": "units",
+        "label": "Units",
+        "description": "The units the data are represented in."
+    },
+    {
+        "tag": "stations",
+        "label": "Station Data",
+        "description": "These options apply only to the station data displayed on the map. Gridded map products are generated using partial filled station data."
+    },
+    {
+        "tag": "rainfall",
+        "label": "Rainfall",
+        "description": "Rainfall data (1990 - present)."
+    },
+    {
+        "tag": "legacy_rainfall",
+        "label": "Legacy Rainfall",
+        "description": "Legacy rainfall data based on older production methods (1920 - 2012)."
+    },
+    {
+        "tag": "max_temp",
+        "label": "Maximum Temperature",
+        "description": "Temperature data aggregated to its maximum value over the time period."
+    },
+    {
+        "tag": "min_temp",
+        "label": "Minimum Temperature",
+        "description": "Temperature data aggregated to its minimum value over the time period."
+    },
+    {
+        "tag": "mean_temp",
+        "label": "Mean Temperature",
+        "description": "Temperature data aggregated to its average value over the time period."
+    },
+    {
+        "tag": "ds_rainfall",
+        "label": "Rainfall Projections",
+        "description": "Downscaled future projections for rainfall data."
+    },
+    {
+        "tag": "ds_temp",
+        "label": "Temperature Projections",
+        "description": "Downscaled future projections for temperature data."
+    },
+    {
+        "tag": "ndvi",
+        "label": "NDVI",
+        "description": "Normalized Difference Vegetation Index"
+    },
+    {
+        "tag": "rh",
+        "label": "Relative Humidity",
+        "description": "Relative humidity data"
+    },
+    {
+        "tag": "rf_map",
+        "label": "Rainfall Map",
+        "description": "A gridded rainfall map representing estimated rainfall values over the state of Hawai\u02bbi."
+    },
+    {
+        "tag": "temp_map",
+        "label": "Temperature Map",
+        "description": "A gridded temperature map representing the estimated temperature values over the state of Hawai\u02bbi."
+    },
+    {
+        "tag": "rf_downscale_map",
+        "label": "Rainfall Map",
+        "description": "A gridded rainfall map representing estimated present day or predicted future rainfall values."
+    },
+    {
+        "tag": "rf_downscale_change",
+        "label": "Rainfall Change Map",
+        "description": "A gridded map displaying the predicted change in rainfall from present day conditions."
+    },
+    {
+        "tag": "temp_downscale_map",
+        "label": "Temperature Map",
+        "description": "A gridded temperature map representing estimated present day or predicted future average temperature values."
+    },
+    {
+        "tag": "temp_downscale_map_change",
+        "label": "Temperature Change Map",
+        "description": "A gridded map displaying the predicted change in temperature from present day conditions."
+    },
+    {
+        "tag": "data_map",
+        "label": "Data Map",
+        "description": "A gridded map representing estimated values over the state of Hawai\u02bbi."
+    },
+    {
+        "tag": "se",
+        "label": "Standard Error Map",
+        "description": "The standard error values for the gridded map data."
+    },
+    {
+        "tag": "anom",
+        "label": "Anomaly Map",
+        "description": "The anomaly values for the gridded map."
+    },
+    {
+        "tag": "anom_se",
+        "label": "Anomaly Standard Error",
+        "description": "The standard error values for the gridded map's anomaly values."
+    },
+    {
+        "tag": "metadata",
+        "label": "Metadata and Error Metrics",
+        "description": "Gridded map product metadata and error metrics."
+    },
+    {
+        "tag": "station_data",
+        "label": "Station Data",
+        "description": "Processed station data including each station's metadata and values over a period of time"
+    },
+    {
+        "tag": "ndvi_map",
+        "label": "NDVI Map",
+        "description": "A gridded normalized difference vegetation index (NDVI) map representing estimated values over the state of Hawai\u02bbi."
+    },
+    {
+        "tag": "rh_map",
+        "label": "Relative Humidity Map",
+        "description": "A gridded relative humidity map representing estimated relative humidity percentages over the state of Hawai\u02bbi."
+    },
+    {
+        "tag": "map_data",
+        "label": "Map Data",
+        "description": "Gridded mapped data files and metadata"
+    },
+    {
+        "tag": "historical_rainfall",
+        "label": "Historical Rainfall",
+        "description": "Datasets using empirical rainfall data."
+    },
+    {
+        "tag": "historical_temperature",
+        "label": "Historical Temperature",
+        "description": "Datasets using empirical temperature data"
+    },
+    {
+        "tag": "future_climate",
+        "label": "Future Climate Projections",
+        "description": "Future climate projections using downscaling prediction methods."
+    },
+    {
+        "tag": "dataset",
+        "label": "Dataset",
+        "description": "Select the type of data you would like to view. Hover over an option for a description of the dataset."
+    },
+    {
+        "tag": "station_layer",
+        "label": "Station Data",
+        "description": "Markers displaying climate sensor stations"
+    }
+]

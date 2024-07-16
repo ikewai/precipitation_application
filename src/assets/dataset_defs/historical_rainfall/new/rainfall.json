@@ -6,45 +6,25 @@
       "datatype": "rainfall",
       "production": "new"
     },
-    "datasetSelectors": [{
+    "selectors": [{
       "tag": "period",
       "label": "Time Period",
       "description": "The time period over which the data is measured.",
       "values": [{
           "tag": "day",
           "label": "Daily",
-          "description": "Data measured at a daily time scale."
+          "description": "Data measured at a daily time scale.",
+          "queryParams": {
+            "period": "day"
+          }
         },
         {
           "tag": "month",
           "label": "Monthly",
-          "description": "Data measured at a monthly time scale."
-      }]
-    }],
-    "layerSelectors": [{
-      "tag": "stations",
-      "label": "Station Data",
-      "description": "These options apply only to the station data displayed on the map. Gridded map products are generated using partial filled station data.",
-      "selectors": [{
-        "tag": "fill",
-        "label": "Data Fill",
-        "description": "The type of processing the station data goes through.",
-        "values": [{
-          "tag": "partial",
-          "label": "Partial Filled",
-          "description": "This data has undergone QA/QC and is partially filled using statistical techniques to estimate some missing station values.",
+          "description": "Data measured at a monthly time scale.",
           "queryParams": {
-            "fill": "partial"
+            "period": "month"
           }
-        },
-        {
-          "tag": "unfilled",
-          "label": "Unfilled",
-          "description": "Station data including only values provided by stations before going through QA/QC.",
-          "queryParams": {
-            "fill": "raw"
-          }
-        }]
       }]
     }],
     "sets": ["sets/month.json", "sets/day.json"],

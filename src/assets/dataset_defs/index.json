@@ -1,22 +1,26 @@
+//make index generator
+//make dataset template generator
 [
     {
-        "type": "group",
-        "file": "historical_rainfall/historical_rainfall.json"
+        "group": "historical_rainfall",
+        "datasets": [{
+            "datatype_file": "historical_rainfall/new/rainfall.json"
+        }"historical_rainfall/new/rainfall.json"]
     },
     {
-        "type": "group",
-        "file": "historical_temperature/historical_temperature.json"
+        "type": "historical_temperature",
+        "datasets": ["historical_temperature/historical_temperature.json"]
     },
     {
-        "type": "group",
-        "file": "future_climate/future_climate.json"
+        "type": "future_climate",
+        "datasets": ["future_climate/future_climate.json"]
     },
     {
-        "type": "type",
-        "file": "ndvi/ndvi.json"
+        "group": null,
+        "datasets": ["ndvi/ndvi.json"]
     },
     {
-        "type": "type",
-        "file": "relative_humidity/ndvi.json"
+        "group": null,
+        "datasets": ["relative_humidity/ndvi.json"]
     }
 ]

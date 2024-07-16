@@ -1,0 +1,7 @@
+{
+    "banner": {
+        "type": "warning",
+        "label": "Experimental",
+        "description": "The gridded data for this dataset are experimental and may be updated in the future. Please use with caution."
+    }
+}
