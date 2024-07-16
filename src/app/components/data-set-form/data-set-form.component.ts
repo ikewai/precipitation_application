@@ -67,9 +67,9 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
   changeDataset() {
     window.dispatchEvent(new Event("resize"));
     let t1i = this.t1.selectedIndex;
-    let t2i = this.t2.toArray()[t1i].selectedIndex;
     let datatype = null;
     if(t1i < this.formData.datasetFormData.datasetGroups.length) {
+      let t2i = this.t2.toArray()[t1i].selectedIndex;
       datatype = this.formData.datasetFormData.datasetGroups[t1i].values[t2i].tag;
     }
     else {
