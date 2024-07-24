@@ -13,11 +13,23 @@
     "handler": "standard_month"
   },
 
-  "colors": "sequential",
-  "range": [0, 650],
-  "units",
+  "layerGroups": [
+    {
+      "colors": "sequential",
+      "range": [0, 650],
+      "rangeCapped": [true, false],
+      "layers": []
+    },
+    {
+      "colors": "sequential",
+      "range": [-1, 1],
+      "rangeCapped": [true, true],
+      "layers": []
+    }
+  ]
+  
 
-  "rangeCapped": [true, false],
+  
   "experimental": false,
   "banner": null,
   "displayOptions": "data_map",
