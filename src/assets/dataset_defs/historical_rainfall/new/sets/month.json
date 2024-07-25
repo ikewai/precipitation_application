@@ -13,11 +13,31 @@
     "handler": "standard_month"
   },
 
+  //layers have units and stuff,
+  //get this from handlers
+  //basic handlers store a group of layers that are then handled by layer controls
+  "layers": [
+    {
+      "params": ["basic", "stations"],
+      "handler": "stations"
+    },
+    {
+      "params": ["basic"],
+      "handlers": {
+        "query": "value_map",
+        "vis": ""
+      },
+      "handler": "value_map"
+    }
+  ],
+
   "layerGroups": [
     {
       "colors": "sequential",
       "range": [0, 650],
       "rangeCapped": [true, false],
+      "defaultUnit": "c",
+      "units": ["c", "f", "k"],
       "layers": []
     },
     {
@@ -27,9 +47,9 @@
       "layers": []
     }
   ]
-  
 
-  
+
+
   "experimental": false,
   "banner": null,
   "displayOptions": "data_map",
