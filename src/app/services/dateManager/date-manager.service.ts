@@ -23,6 +23,15 @@ export class DateManagerService {
     year: "YYYY"
   }];
 
+  private plotlyFormats = {
+    second: "%b %d, %Y %I:%M:%S %p",
+    minute: "%b %d, %Y %I:%M %p",
+    hour: "%b %d, %Y %I %p",
+    day: "%b %d, %Y",
+    month: "%b, %Y",
+    year: "%Y"
+  };
+
   private periodPrecedent = ["second", "minute", "hour", "day", "month", "year"]
 
   getPeriodOffset(period: UnitOfTime, offset: number) {
@@ -78,9 +87,12 @@ export class DateManagerService {
     return num;
   }
 
-  constructor() { }
-}
+  getRange(date: Moment.Moment, period: Moment.unitOfTime.StartOf) {
+    let clone = date.clone();
+    return [clone.startOf(period).toISOString(), clone.endOf(period).toISOString()];
+  }
 
-// class DateHandler {
-//   private _
-// }
+  getPlotlyFormat(period: string) {
+    return this.plotlyFormats[period];
+  }
+}
