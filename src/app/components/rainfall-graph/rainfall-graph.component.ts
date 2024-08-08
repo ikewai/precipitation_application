@@ -30,11 +30,6 @@ export class RainfallGraphComponent implements OnInit {
       month: "Zoom to month",
       year: "Zoom to year",
       all: "Zoom to all data"
-    },
-    ranges: {
-      month: null,
-      year: null,
-      all: null
     }
   };
 
@@ -79,13 +74,6 @@ export class RainfallGraphComponent implements OnInit {
   __date: Moment.Moment = null;
   @Input() set date(date: Moment.Moment) {
     this.__date = date;
-    let clone = date.clone();
-    //just get current month, and year
-    //if subdaily data available need to swap this to get lowest available period as well and get all higher level periods
-    let monthRange = [clone.startOf("month").toISOString(), clone.endOf("month").toISOString()];
-    let yearRange = [clone.startOf("year").toISOString(), clone.endOf("year").toISOString()]
-    this.rangeData.ranges.month = monthRange;
-    this.rangeData.ranges.year = yearRange;
     //set ranges for all graphs with zooms applied
     for(let period in this.zoomData) {
       //if there is data for the period apply zoom
@@ -95,29 +83,33 @@ export class RainfallGraphComponent implements OnInit {
     }
   }
 
+  constructor(private dateHandler: DateManagerService, private csvGen: CsvGenService) {
+
+  }
 
   setRange(dataPeriod: string, rangePeriod: string) {
+    if(rangePeriod === undefined) {
+      rangePeriod = "all";
+    }
     //log zoom applied
     this.zoomData[dataPeriod] = rangePeriod;
     //clone range so don't alter source
-    let xrange = this.rangeData.ranges[rangePeriod] ? [...this.rangeData.ranges[rangePeriod]]: null;
+    let xrange = rangePeriod == "all" ? null : this.dateHandler.getRange(this.__date, <Moment.unitOfTime.StartOf>rangePeriod);
+    let dateFormat = this.dateHandler.getPlotlyFormat(dataPeriod);
     this.data[dataPeriod].graph.layout.xaxis = {
       range: xrange,
+      type: "date",
+      tickformat: dateFormat,
       title: {
-        text: "Date",
+        text: "Date"
       }
     };
     this.data[dataPeriod].graph.layout.yaxis = {
       autorange: true,
       title: {
-        text: this.yaxisText,
+        text: this.yaxisText
       }
     };
-  }
-
-
-  constructor(private dateHandler: DateManagerService, private csvGen: CsvGenService) {
-
   }
 
   downloadCSV(period: string) {
