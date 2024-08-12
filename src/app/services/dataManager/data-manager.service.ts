@@ -53,7 +53,7 @@ export class DataManagerService {
       let date = end.clone();
       while(date.isSameOrAfter(start)) {
         let end_s: string = date.toISOString();
-        date.subtract(300 * timeseriesData.interval, timeseriesData.unit);
+        date.subtract(500 * timeseriesData.interval, timeseriesData.unit);
         let start_s: string = date.toISOString();
 
         properties.period = timeseriesData.period.tag;

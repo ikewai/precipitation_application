@@ -13,7 +13,7 @@ import { TimeseriesData } from '../dataset-form-manager.service';
 export class RequestFactoryService {
   //decouple for easy testing of API changes
   static readonly API_KEYS = {
-    hcdp: "hcdp_api",
+    hcdp: "apistore",
     tapis: "hcdp_api"
   };
 

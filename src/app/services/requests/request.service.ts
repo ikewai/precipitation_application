@@ -11,7 +11,7 @@ import { ErrorPopupService } from 'src/app/services/errorHandling/error-popup.se
 })
 export class RequestService {
   private static readonly CONFIG_FILE = "api_config.json";
-  private static readonly MAX_REQS = 5;
+  private static readonly MAX_REQS = 8;
 
   private initPromise: Promise<Config>;
   //add priority queueing
