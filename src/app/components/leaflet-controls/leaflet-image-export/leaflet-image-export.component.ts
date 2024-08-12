@@ -34,7 +34,8 @@ export class LeafletImageExportComponent implements OnInit {
 
   }
 
-  async exportImage() {
+  async exportImage(e: PointerEvent) {
+    e.stopPropagation();
     this._map.dragging.disable();
     this._map.touchZoom.disable();
     this._map.doubleClickZoom.disable();
