@@ -9,6 +9,8 @@ import { Station } from "../Stations";
 //static layers
 
 class TimeseriesHandler {
+    static readonly TIMESERIES_CHUNKS = 500;
+
     private chunks;
 
     constructor(dataset: StringMap, start: Moment, end: Moment) {

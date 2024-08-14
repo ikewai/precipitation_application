@@ -7,6 +7,8 @@ interface PeriodData {
 }
 
 export abstract class TimeseriesHandler {
+    protected static readonly TIMESERIES_CHUNKS: number = 500;
+
     protected magnitudes: PeriodData[];
     protected _start: Moment;
     protected _end: Moment;
@@ -39,6 +41,7 @@ export abstract class TimeseriesHandler {
         return label;
     }
 
+    //VALIDATE THAT DATE IS VALID
     private validate(): void {
         if(this._date.isBefore(this._start)) {
             this._date = this._start.clone();
@@ -151,6 +154,30 @@ export class NDVIHandle extends TimeseriesHandler {
             interval: 1,
             unit: "year"
         }], defaultDate);
+    }
+
+    public move(magnitude: number, count: number) {
+        let magData = this.magnitudes[magnitude];
+        this._date.add(<number>magData.interval * <number>count, magData.unit);
+        this.updated();
+    }
+
+    private roundToInterval() {
+        let day = this._date.dayOfYear();
+        let offset = Math.round(day / 16.0) * 16;
+        if(offset > 366) {
+            this._date.add(1, "year").startOf("year");
+        }
+        else {
+            this._date.dayOfYear(offset);
+        }
+    }
+
+    //22 intervals per year
+
+    //ndvi resets at the start of the year
+    private computeValidDays() {
+
     }
 }
 
