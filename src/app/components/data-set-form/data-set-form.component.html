@@ -23,7 +23,39 @@
     </h3>
 
     <div #tabContainer>
+
       <mat-tab-group #t1 dynamicHeight dynamic id="t1" class="t1-tabs" (selectedIndexChange)="changeDataset()" [style.width.px]="_width - 20">
+        <mat-tab *ngFor="let item of datasetData" [matTooltip]="item.data.description">
+
+          <div *ngIf="item.type == 'group'; else set">
+            <ng-template mat-tab-label>
+              <label class="tab-label" [matTooltip]="item.data.description">{{item.data.label}}</label>
+            </ng-template>
+            <mat-tab-group #t2 dynamicHeight id="t2" class="subform" (selectedIndexChange)="changeDataset()">
+              <mat-tab *ngFor="let value of item.data.values" [matTooltip]="value.description">
+                <ng-template mat-tab-label>
+                  <label class="tab-label" [matTooltip]="value.description">{{value.label}}</label>
+                </ng-template>
+                <template *ngTemplateOutlet="form"></template>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+          
+          <ng-template #set>
+            <ng-template mat-tab-label>
+              <label class="tab-label" [matTooltip]="item.data.description">{{item.data.label}}</label>
+            </ng-template>
+            <div class="subform">
+              <template *ngTemplateOutlet="form"></template>
+            </div>
+          </ng-template>
+
+          
+        </mat-tab>
+      </mat-tab-group>
+
+
+      <!-- <mat-tab-group #t1 dynamicHeight dynamic id="t1" class="t1-tabs" (selectedIndexChange)="changeDataset()" [style.width.px]="_width - 20">
         <mat-tab *ngFor="let group of formData.datasetFormData.datasetGroups" [matTooltip]="group.description">
           <ng-template mat-tab-label>
             <label class="tab-label" [matTooltip]="group.description">{{group.label}}</label>
@@ -46,7 +78,7 @@
           </div>
         </mat-tab>
       </mat-tab-group>
-    </div>
+    </div> -->
 
     <ng-template #form matTabContent>
       <div class="form-body">

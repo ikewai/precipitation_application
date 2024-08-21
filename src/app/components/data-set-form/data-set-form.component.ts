@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef, Input, ViewChildren, QueryList } from '@angular/core';
 import {EventParamRegistrarService} from "../../services/inputManager/event-param-registrar.service";
 import { FormControl } from '@angular/forms';
-import { ActiveFormData, DatasetFormManagerService, FocusData, FormManager, FormNode, VisDatasetItem } from 'src/app/services/dataset-form-manager.service';
+import { ActiveFormData, DatasetFormManagerService, DatasetSelectorGroup, FocusData, FormManager, FormNode, FormValue, VisDatasetItem } from 'src/app/services/dataset-form-manager.service';
 import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { MatTabGroup } from '@angular/material/tabs';
 
@@ -12,6 +12,10 @@ import { MatTabGroup } from '@angular/material/tabs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataSetFormComponent implements OnInit, AfterViewInit {
+  private static readonly FORM_ORDER = ["historical_rainfall", "historical_temperature", "rh", "ndvi", "downscaled"];
+
+  datasetData: DatasetData[];
+
   _width: number;
   //ensure tab resize repaginates
   @Input() set width(width: number) {
@@ -43,11 +47,35 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
     let formData = this._formManager.getFormData();
     this.formData = formData;
     //set up form controls
-    this.controls = {}
+    this.controls = {};
+    this.setupDatasetData();
     this.setControlValues(formData.values);
     this.updateDataset();
-    formData.datasetFormData.datasetGroups[0].values[0].description
-    formData.datasetFormData.datasetGroups[0].description
+  }
+
+  setupDatasetData() {
+    this.datasetData = new Array(DataSetFormComponent.FORM_ORDER.length);
+    for(let group of this.formData.datasetFormData.datasetGroups) {
+      let i = DataSetFormComponent.FORM_ORDER.indexOf(group.tag);
+      this.datasetData[i] = <DatasetGroupData>{
+        type: "group",
+        data: group,
+        groupIndex: -1
+      };
+    }
+    for(let set of this.formData.datasetFormData.datasetValues) {
+      let i = DataSetFormComponent.FORM_ORDER.indexOf(set.tag);
+      this.datasetData[i] = <DatasetSetData>{
+        type: "set",
+        data: set
+      };
+    }
+    let groupIndex = 0;
+    for(let i = 0; i < this.datasetData.length; i++) {
+      if(this.datasetData[i].type == "group") {
+        (<DatasetGroupData>this.datasetData[i]).groupIndex = groupIndex++;
+      }
+    }
   }
 
   respondToVisibility(element: HTMLElement, callback: (intersects: boolean, observer: IntersectionObserver) => any) {
@@ -68,13 +96,14 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
     window.dispatchEvent(new Event("resize"));
     let t1i = this.t1.selectedIndex;
     let datatype = null;
-    if(t1i < this.formData.datasetFormData.datasetGroups.length) {
-      let t2i = this.t2.toArray()[t1i].selectedIndex;
-      datatype = this.formData.datasetFormData.datasetGroups[t1i].values[t2i].tag;
+    if(this.datasetData[t1i].type == "group") {
+      let groupData = <DatasetGroupData>this.datasetData[t1i];
+      let t2i = this.t2.toArray()[groupData.groupIndex].selectedIndex;
+      datatype = groupData.data.values[t2i].tag;
     }
     else {
-      t1i -= this.formData.datasetFormData.datasetGroups.length;
-      datatype = this.formData.datasetFormData.datasetValues[t1i].tag;
+      let setData = <DatasetSetData>this.datasetData[t1i];
+      datatype = setData.data.tag;
     }
     this.controls.datatype.setValue(datatype);
   }
@@ -176,3 +205,20 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
     }
   }
 }
+
+
+interface DatasetData {
+  type: "set" | "group",
+  data: DatasetSelectorGroup | FormValue
+};
+
+interface DatasetSetData extends DatasetData {
+  type: "set",
+  data: FormValue
+};
+
+interface DatasetGroupData extends DatasetData {
+  type: "group",
+  data: DatasetSelectorGroup,
+  groupIndex: number
+};
