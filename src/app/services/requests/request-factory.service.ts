@@ -32,6 +32,18 @@ export class RequestFactoryService {
   //////////////
 
   async getRaster(params: any, printTiming: boolean = true, delay?: number): Promise<RequestResults> {
+    //TEMP WORKAROUND
+    if(params.type == "absolute") {
+      params.type = "data_map_change";
+    }
+    else if(params.type == "percent") {
+      params.type = "data_map_change";
+      params.units = "percent";
+    }
+    else if(params.type == "direct") {
+      delete params.type;
+    }
+
     let response = await this.reqService.get(RequestFactoryService.API_KEYS.hcdp, "raster", "arraybuffer", ReqPriority.HIGH, params, undefined, undefined, delay);
     let start = new Date().getTime();
     response.transformData((data: ArrayBuffer) => {
