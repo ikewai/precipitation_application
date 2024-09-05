@@ -1,0 +1,79 @@
+<div #tabContainer>
+
+    <mat-tab-group #t1 dynamicHeight dynamic id="t1" class="t1-tabs" (selectedIndexChange)="changeDataset()" [style.width.px]="_width - 20">
+        <mat-tab *ngFor="let item of datasetData" [matTooltip]="item.data.description">
+
+            <div *ngIf="item.type == 'group'; else set">
+                <ng-template mat-tab-label>
+                <label class="tab-label" [matTooltip]="item.data.description">{{item.data.label}}</label>
+                </ng-template>
+                <mat-tab-group #t2 dynamicHeight id="t2" class="subform" (selectedIndexChange)="changeDataset()">
+                <mat-tab *ngFor="let value of item.data.values" [matTooltip]="value.description">
+                    <ng-template mat-tab-label>
+                    <label class="tab-label" [matTooltip]="value.description">{{value.label}}</label>
+                    </ng-template>
+                    <template *ngTemplateOutlet="form"></template>
+                </mat-tab>
+                </mat-tab-group>
+            </div>
+            
+            <ng-template #set>
+                <ng-template mat-tab-label>
+                    <label class="tab-label" [matTooltip]="item.data.description">{{item.data.label}}</label>
+                </ng-template>
+                <div class="subform">
+                    <template *ngTemplateOutlet="form"></template>
+                </div>
+            </ng-template>
+        
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
+<ng-template #form matTabContent>
+    <div class="form-body">
+        <div *ngFor="let field of formData.datasetItem.formData.default" class="control">
+            <app-selector
+            [label]="field.label"
+            [tooltip]="field.description"
+            [values]="field.values"
+            [control]="controls[field.tag]"
+            ></app-selector>
+        </div>
+
+        <div *ngFor="let category of formData.datasetItem.formData.categorized">
+            <div class="category-label">
+                <h4 class="inline-block">
+                    {{category.label}}
+                </h4>
+                <mat-icon
+                    aria-hidden="false"
+                    aria-label="Tooltip"
+                    matTooltipPosition="right"
+                    [matTooltip]="category.description"
+                    inline="true">
+                    help
+                </mat-icon>
+            </div>
+            <div class="control-subgroup">
+                <div
+                    *ngFor="let field of category.nodes"
+                    class="control">
+                    <app-selector
+                        [label]="field.label"
+                        [tooltip]="field.description"
+                        [values]="field.values"
+                        [control]="controls[field.tag]"
+                    ></app-selector>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="formData.datasetItem.coverageLabel">
+            <div class="control">
+                <h4 class="coverage-label">Dataset Coverage</h4>
+                {{formData.datasetItem.coverageLabel}}
+            </div>
+            <div class="spacer"></div>
+        </div>
+    </div>
+</ng-template>

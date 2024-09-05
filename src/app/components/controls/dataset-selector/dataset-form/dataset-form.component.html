@@ -1,0 +1,38 @@
+<div class="form-body">
+  <div *ngFor="let field of formData.default" class="control">
+    <app-selector
+      [label]="field.label"
+      [tooltip]="field.description"
+      [values]="field.values"
+      [control]="controls[field.tag]"
+    ></app-selector>
+  </div>
+
+  <div *ngFor="let category of formData.categorized">
+    <div class="category-label">
+      <h4 class="inline-block">
+        {{category.label}}
+      </h4>
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Tooltip"
+        matTooltipPosition="right"
+        [matTooltip]="category.description"
+        inline="true">
+        help
+      </mat-icon>
+    </div>
+    <div class="control-subgroup">
+      <div
+        *ngFor="let field of category.nodes"
+        class="control">
+        <app-selector
+            [label]="field.label"
+            [tooltip]="field.description"
+            [values]="field.values"
+            [control]="controls[field.tag]"
+        ></app-selector>
+      </div>
+    </div>
+  </div>
+</div>

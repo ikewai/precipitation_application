@@ -41,6 +41,27 @@ export class DatasetFormManagerService {
     let periodMid = new FormValue(new DisplayData("Mid-century (2040-2069) projections.", "Mid-Century (2040-2069)", "mid"), {period: "mid"}, [true, true]);
     let periodLateStat = new FormValue(new DisplayData("Late-century (2070-2099) projections.", "Late-Century (2070-2099)", "late_s"), {period: "end"}, [true, true]);
     let periodLateDyn = new FormValue(new DisplayData("Late-century (2080-2099) projections.", "Late-Century (2080-2099)", "late_d"), {period: "end"}, [true, true]);
+    //Climatology mean type
+    let meanMonthly = new FormValue(new DisplayData("Mean monthly maps", "Mean Monthly", "mean_month"), {type: "mean_month"}, [true, true]);
+    let meanAnnual30 = new FormValue(new DisplayData("Annual maps averaged over a 30 year period", "Mean 30 Year Annual", "mean_30year_annual"), {type: "mean_30year_annual"}, [true, true]);
+    let meanAnnualDecadal = new FormValue(new DisplayData("Annual maps aggregated over the 2011-2020 decade", "Mean Annual Decadal", "mean_annual_decadal"), {type: "mean_annual_decadal"}, [true, true]);
+    //Climatology period
+    let periodJanuary = new FormValue(new DisplayData("Mean rainfall aggregated over the month of January", "January", "january"), {date: "1900-01"}, [true, true]);
+    let periodFebruary = new FormValue(new DisplayData("Mean rainfall aggregated over the month of February", "February", "february"), {date: "1900-02"}, [true, true]);
+    let periodMarch = new FormValue(new DisplayData("Mean rainfall aggregated over the month of March", "March", "march"), {date: "1900-03"}, [true, true]);
+    let periodApril = new FormValue(new DisplayData("Mean rainfall aggregated over the month of April", "April", "april"), {date: "1900-04"}, [true, true]);
+    let periodMay = new FormValue(new DisplayData("Mean rainfall aggregated over the month of May", "May", "may"), {date: "1900-05"}, [true, true]);
+    let periodJune = new FormValue(new DisplayData("Mean rainfall aggregated over the month of June", "June", "june"), {date: "1900-06"}, [true, true]);
+    let periodJuly = new FormValue(new DisplayData("Mean rainfall aggregated over the month of July", "July", "july"), {date: "1900-07"}, [true, true]);
+    let periodAugust = new FormValue(new DisplayData("Mean rainfall aggregated over the month of August", "August", "august"), {date: "1900-08"}, [true, true]);
+    let periodSeptember = new FormValue(new DisplayData("Mean rainfall aggregated over the month of September", "September", "september"), {date: "1900-09"}, [true, true]);
+    let periodOctober = new FormValue(new DisplayData("Mean rainfall aggregated over the month of October", "October", "october"), {date: "1900-10"}, [true, true]);
+    let periodNovember = new FormValue(new DisplayData("Mean rainfall aggregated over the month of November", "November", "november"), {date: "1900-11"}, [true, true]);
+    let periodDecember = new FormValue(new DisplayData("Mean rainfall aggregated over the month of December", "December", "december"), {date: "1900-12"}, [true, true]);
+    let period30yr = new FormValue(new DisplayData("30 year climatology averaged over the years 1991-2020", "1991-2020", "1991-2020"), {date: "1991"}, [true, true]);
+    let periodDecadal1991 = new FormValue(new DisplayData("Annual maps averaged over the 1991-2000 decade", "1991-2000", "1991-2000"), {date: "1991"}, [true, true]);
+    let periodDecadal2001 = new FormValue(new DisplayData("Annual maps averaged over the 2001-2010 decade", "2001-2010", "2001-2010"), {date: "2001"}, [true, true]);
+    let periodDecadal2011 = new FormValue(new DisplayData("Annual maps averaged over the 2011-2020 decade", "2011-2020", "2011-2020"), {date: "2011"}, [true, true]);
 
     ////values
     //////spatial extents
@@ -135,6 +156,35 @@ export class DatasetFormManagerService {
       periodLateDyn
     ]);
 
+    let contemporaryClimatologyMeanTypeNode = new FormNode(new DisplayData("The type of data aggregation", "Mean Type", "mean_type"), [
+      meanMonthly,
+      meanAnnual30,
+      meanAnnualDecadal
+    ]);
+    let legacyClimatologyMeanTypeNode = new FormNode(new DisplayData("The type of data aggregation", "Mean Type", "mean_type"), [
+      meanMonthly,
+      meanAnnual30
+    ]);
+
+    let climatologyPeriodNode = new FormNode(new DisplayData("The time period over which the data is averaged", "Data Period", "cl_mean"), [
+      periodJanuary,
+      periodFebruary,
+      periodMarch,
+      periodApril,
+      periodMay,
+      periodJune,
+      periodJuly,
+      periodAugust,
+      periodSeptember,
+      periodOctober,
+      periodNovember,
+      periodDecember,
+      period30yr,
+      periodDecadal1991,
+      periodDecadal2001,
+      periodDecadal2011
+    ]);
+
     let extentDisplayData = new DisplayData("The area of coverage for the data.", "Spatial Extent", "extent");
     let unitsDisplayData = new DisplayData("The units the data are represented in.", "Units", "units");
     let extentNode = new FormNode(extentDisplayData, [statewideSpatialExtent, hawaiiSpatialExtent, mauiSpatialExtent, honoluluSpatialExtent, kauaiSpatialExtent]);
@@ -209,6 +259,16 @@ export class DatasetFormManagerService {
     ], [
       stationDataFillCategory
     ]);
+
+    let contemporaryClimatologyFormData = new FormData([
+      contemporaryClimatologyMeanTypeNode,
+      climatologyPeriodNode
+    ], []);
+
+    let legacyClimatologyFormData = new FormData([
+      legacyClimatologyMeanTypeNode,
+      climatologyPeriodNode
+    ], []);
 
     //Create Focus Managers
     ////dates
@@ -292,6 +352,14 @@ export class DatasetFormManagerService {
     //   period: "day",
     //   fill: "unfilled"
     // });
+
+    //climatologies
+    //set up 
+    // let meanTemperatureDay = new VisDatasetItem(false, true, "Celcius", "°C", "Mean Temperature", "Daily Mean Temperature", [-10, 35], [false, false], null, [], true, {
+    //   mean_type: "mean_month",
+    //   cl_mean: "january"
+    // });
+    let months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 
     //////DS 
     let dsm = [["statistical", "Statistically Downscaled"], ["dynamical", "Dynamically Downscaled"]];
@@ -453,6 +521,9 @@ export class DatasetFormManagerService {
     let ndviDatasetDisplayData = new DisplayData("Normalized Difference Vegetation Index", "NDVI", "ndvi");
     let rhDatasetDisplayData = new DisplayData("Relative humidity data", "Relative Humidity", "rh");
 
+    let meanRainfallClimatologyDatasetDisplayData = new DisplayData("Mean Rainfall Climatologies", "Mean Rainfall", "mean_rf");
+    let meanTemperatureClimatologyDatasetDisplayData = new DisplayData("Mean Air Temperature Climatologies", "Mean Air Temperature", "mean_temp");
+
     let rainfallVisDataset = new Dataset<VisDatasetItem>(rainfallDatasetDisplayData, {
       datatype: "rainfall",
       production: "new"
@@ -506,6 +577,15 @@ export class DatasetFormManagerService {
       //rhDayRaw
     ]);
 
+    // let dsTemperatureVisDataset = new Dataset<VisDatasetItem>(meanRainfallClimatologyDatasetDisplayData, {
+    //   datatype: "mean_rainfall_climatology",
+    //   type: "contemporary_climatology" 
+    // }, contemporaryClimatologyFormData, dsTemperatureItems);
+    // let dsTemperatureVisDataset = new Dataset<VisDatasetItem>(meanTemperatureClimatologyDatasetDisplayData, {
+    //   datatype: "mean_temperature_climatology",
+    //   type: "contemporary_climatology"
+    // }, contemporaryClimatologyFormData, dsTemperatureItems);
+
 
 
     //////////////////////////////////////////////////////////////////////
@@ -554,7 +634,7 @@ export class DatasetFormManagerService {
     let dsPeriodStatisticalAllProperty = new FileProperty(dsPeriodStatisticalNode, ["present"]);
     let dsPeriodStatisticalFutureProperty = new FileProperty(dsPeriodStatisticalNode.filter(["mid", "late_s"]), ["mid"]);
     let dsPeriodDynamicalAllProperty = new FileProperty(dsPeriodDynamicalNode, ["present"]);
-    let dsPeriodDynamicalFutureProperty = new FileProperty(dsPeriodDynamicalNode.filter(["late_d"]), ["late"]);
+    let dsPeriodDynamicalFutureProperty = new FileProperty(dsPeriodDynamicalNode.filter(["late_d"]), ["late_d"]);
     let ndviPeriodProperty = new FileProperty(periodNode.filter(["16day"]), ["16day"]);
 
     //package files

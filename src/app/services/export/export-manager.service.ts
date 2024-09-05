@@ -130,7 +130,6 @@ export class ExportManagerService {
       return new Blob(responses, {type: "application/zip"});
     })
     .catch((e: any) => {
-      console.log("error caught!");
       //error out progress and reject
       progress.error(e);
       return Promise.reject(e);

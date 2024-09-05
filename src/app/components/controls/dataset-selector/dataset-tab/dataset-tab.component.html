@@ -1,0 +1,10 @@
+<mat-tab-group #tabs dynamicHeight dynamic id="tabs" (selectedIndexChange)="selectTab()">
+    <mat-tab *ngFor="let item of datasetData" [matTooltip]="item.data.description">
+        <ng-template mat-tab-label>
+            <label class="tab-label" [matTooltip]="item.data.description">{{item.data.label}}</label>
+        </ng-template>
+        <div class="content">
+            <ng-content></ng-content>
+        </div>
+    </mat-tab>
+</mat-tab-group>

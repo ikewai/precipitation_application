@@ -75,6 +75,9 @@ import { StationFilterComponent } from './components/station-filter/station-filt
 import { SelectorComponent } from './components/controls/selector/selector.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ExperimentalBannerComponent } from './components/leaflet-controls/experimental-banner/experimental-banner.component';
+import { DatasetSelectorComponent } from './components/controls/dataset-selector/dataset-selector.component';
+import { DatasetTabComponent } from './components/controls/dataset-selector/dataset-tab/dataset-tab.component';
+import { DatasetFormComponent } from './components/controls/dataset-selector/dataset-form/dataset-form.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -114,7 +117,10 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FocusControlComponent,
     StationFilterComponent,
     SelectorComponent,
-    ExperimentalBannerComponent
+    ExperimentalBannerComponent,
+    DatasetSelectorComponent,
+    DatasetTabComponent,
+    DatasetFormComponent
   ],
   imports: [
     MatProgressBarModule,
