@@ -12,7 +12,7 @@ import { MatTabGroup } from '@angular/material/tabs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataSetFormComponent implements OnInit, AfterViewInit {
-  private static readonly FORM_ORDER = ["historical_rainfall", "historical_temperature", "rh", "ndvi", "downscaled"];
+  private static readonly FORM_ORDER = ["historical_rainfall", "historical_temperature", "rh", "ndvi", "downscaled", "contemporary_climatology", "legacy_climatology"];
 
   datasetData: DatasetData[];
 
@@ -28,7 +28,6 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
   @ViewChild("t1", {static: false}) t1: MatTabGroup;
   @ViewChildren("t2") t2: QueryList<MatTabGroup>;
   @ViewChild("tabContainer", {static: false}) tabContainer: ElementRef;
-  @ViewChild("container", {static: false}) container: ElementRef;
 
   formData: ActiveFormData<VisDatasetItem>;
   controls: {[field: string]: FormControl};
@@ -198,6 +197,10 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
         });
       }
       let focusData = new FocusData("selector", undefined, this.dataset.optionData.paramData, this.dataset.optionData);
+      this.paramService.pushFocusData(focusData);
+    }
+    else if(this.dataset.focusManager.type == "selector") {
+      let focusData = new FocusData("selector", undefined, {}, null);
       this.paramService.pushFocusData(focusData);
     }
     else {

@@ -42,26 +42,26 @@ export class DatasetFormManagerService {
     let periodLateStat = new FormValue(new DisplayData("Late-century (2070-2099) projections.", "Late-Century (2070-2099)", "late_s"), {period: "end"}, [true, true]);
     let periodLateDyn = new FormValue(new DisplayData("Late-century (2080-2099) projections.", "Late-Century (2080-2099)", "late_d"), {period: "end"}, [true, true]);
     //Climatology mean type
-    let meanMonthly = new FormValue(new DisplayData("Mean monthly maps", "Mean Monthly", "mean_month"), {type: "mean_month"}, [true, true]);
-    let meanAnnual30 = new FormValue(new DisplayData("Annual maps averaged over a 30 year period", "Mean 30 Year Annual", "mean_30year_annual"), {type: "mean_30year_annual"}, [true, true]);
-    let meanAnnualDecadal = new FormValue(new DisplayData("Annual maps aggregated over the 2011-2020 decade", "Mean Annual Decadal", "mean_annual_decadal"), {type: "mean_annual_decadal"}, [true, true]);
+    let meanMonthly = new FormValue(new DisplayData("Mean monthly maps", "Mean Monthly", "mean_monthly"), {mean_type: "mean_monthly"}, [true, true]);
+    let meanAnnual30 = new FormValue(new DisplayData("Annual maps averaged over a 30 year period", "Mean 30 Year Annual", "mean_30yr_annual"), {mean_type: "mean_30yr_annual"}, [true, true]);
+    let meanAnnualDecadal = new FormValue(new DisplayData("Annual maps aggregated over the 2011-2020 decade", "Mean Annual Decadal", "mean_annual_decadal"), {mean_type: "mean_annual_decadal"}, [true, true]);
     //Climatology period
-    let periodJanuary = new FormValue(new DisplayData("Mean rainfall aggregated over the month of January", "January", "january"), {date: "1900-01"}, [true, true]);
-    let periodFebruary = new FormValue(new DisplayData("Mean rainfall aggregated over the month of February", "February", "february"), {date: "1900-02"}, [true, true]);
-    let periodMarch = new FormValue(new DisplayData("Mean rainfall aggregated over the month of March", "March", "march"), {date: "1900-03"}, [true, true]);
-    let periodApril = new FormValue(new DisplayData("Mean rainfall aggregated over the month of April", "April", "april"), {date: "1900-04"}, [true, true]);
-    let periodMay = new FormValue(new DisplayData("Mean rainfall aggregated over the month of May", "May", "may"), {date: "1900-05"}, [true, true]);
-    let periodJune = new FormValue(new DisplayData("Mean rainfall aggregated over the month of June", "June", "june"), {date: "1900-06"}, [true, true]);
-    let periodJuly = new FormValue(new DisplayData("Mean rainfall aggregated over the month of July", "July", "july"), {date: "1900-07"}, [true, true]);
-    let periodAugust = new FormValue(new DisplayData("Mean rainfall aggregated over the month of August", "August", "august"), {date: "1900-08"}, [true, true]);
-    let periodSeptember = new FormValue(new DisplayData("Mean rainfall aggregated over the month of September", "September", "september"), {date: "1900-09"}, [true, true]);
-    let periodOctober = new FormValue(new DisplayData("Mean rainfall aggregated over the month of October", "October", "october"), {date: "1900-10"}, [true, true]);
-    let periodNovember = new FormValue(new DisplayData("Mean rainfall aggregated over the month of November", "November", "november"), {date: "1900-11"}, [true, true]);
-    let periodDecember = new FormValue(new DisplayData("Mean rainfall aggregated over the month of December", "December", "december"), {date: "1900-12"}, [true, true]);
-    let period30yr = new FormValue(new DisplayData("30 year climatology averaged over the years 1991-2020", "1991-2020", "1991-2020"), {date: "1991"}, [true, true]);
-    let periodDecadal1991 = new FormValue(new DisplayData("Annual maps averaged over the 1991-2000 decade", "1991-2000", "1991-2000"), {date: "1991"}, [true, true]);
-    let periodDecadal2001 = new FormValue(new DisplayData("Annual maps averaged over the 2001-2010 decade", "2001-2010", "2001-2010"), {date: "2001"}, [true, true]);
-    let periodDecadal2011 = new FormValue(new DisplayData("Annual maps averaged over the 2011-2020 decade", "2011-2020", "2011-2020"), {date: "2011"}, [true, true]);
+    let periodJanuary = new FormValue(new DisplayData("Mean rainfall aggregated over the month of January", "January", "january"), {period: "january"}, [true, true]);
+    let periodFebruary = new FormValue(new DisplayData("Mean rainfall aggregated over the month of February", "February", "february"), {period: "february"}, [true, true]);
+    let periodMarch = new FormValue(new DisplayData("Mean rainfall aggregated over the month of March", "March", "march"), {period: "march"}, [true, true]);
+    let periodApril = new FormValue(new DisplayData("Mean rainfall aggregated over the month of April", "April", "april"), {period: "april"}, [true, true]);
+    let periodMay = new FormValue(new DisplayData("Mean rainfall aggregated over the month of May", "May", "may"), {period: "may"}, [true, true]);
+    let periodJune = new FormValue(new DisplayData("Mean rainfall aggregated over the month of June", "June", "june"), {period: "june"}, [true, true]);
+    let periodJuly = new FormValue(new DisplayData("Mean rainfall aggregated over the month of July", "July", "july"), {period: "july"}, [true, true]);
+    let periodAugust = new FormValue(new DisplayData("Mean rainfall aggregated over the month of August", "August", "august"), {period: "august"}, [true, true]);
+    let periodSeptember = new FormValue(new DisplayData("Mean rainfall aggregated over the month of September", "September", "september"), {period: "september"}, [true, true]);
+    let periodOctober = new FormValue(new DisplayData("Mean rainfall aggregated over the month of October", "October", "october"), {period: "october"}, [true, true]);
+    let periodNovember = new FormValue(new DisplayData("Mean rainfall aggregated over the month of November", "November", "november"), {period: "november"}, [true, true]);
+    let periodDecember = new FormValue(new DisplayData("Mean rainfall aggregated over the month of December", "December", "december"), {period: "december"}, [true, true]);
+    let period30yr = new FormValue(new DisplayData("30 year climatology averaged over the years 1991-2020", "1991-2020", "1991-2020"), {period: "1991-2020"}, [true, true]);
+    let periodDecadal1991 = new FormValue(new DisplayData("Annual maps averaged over the 1991-2000 decade", "1991-2000", "1991-2000"), {period: "1991-2000"}, [true, true]);
+    let periodDecadal2001 = new FormValue(new DisplayData("Annual maps averaged over the 2001-2010 decade", "2001-2010", "2001-2010"), {period: "2001-2010"}, [true, true]);
+    let periodDecadal2011 = new FormValue(new DisplayData("Annual maps averaged over the 2011-2020 decade", "2011-2020", "2011-2020"), {period: "2011-2020"}, [true, true]);
 
     ////values
     //////spatial extents
@@ -156,13 +156,9 @@ export class DatasetFormManagerService {
       periodLateDyn
     ]);
 
-    let contemporaryClimatologyMeanTypeNode = new FormNode(new DisplayData("The type of data aggregation", "Mean Type", "mean_type"), [
+    let climatologyMeanTypeNode = new FormNode(new DisplayData("The type of data aggregation", "Mean Type", "mean_type"), [
       meanMonthly,
-      meanAnnual30,
-      meanAnnualDecadal
-    ]);
-    let legacyClimatologyMeanTypeNode = new FormNode(new DisplayData("The type of data aggregation", "Mean Type", "mean_type"), [
-      meanMonthly,
+      meanAnnualDecadal,
       meanAnnual30
     ]);
 
@@ -179,10 +175,10 @@ export class DatasetFormManagerService {
       periodOctober,
       periodNovember,
       periodDecember,
-      period30yr,
       periodDecadal1991,
       periodDecadal2001,
-      periodDecadal2011
+      periodDecadal2011,
+      period30yr
     ]);
 
     let extentDisplayData = new DisplayData("The area of coverage for the data.", "Spatial Extent", "extent");
@@ -261,13 +257,21 @@ export class DatasetFormManagerService {
     ]);
 
     let contemporaryClimatologyFormData = new FormData([
-      contemporaryClimatologyMeanTypeNode,
+      climatologyMeanTypeNode,
       climatologyPeriodNode
     ], []);
 
     let legacyClimatologyFormData = new FormData([
-      legacyClimatologyMeanTypeNode,
+      climatologyMeanTypeNode,
       climatologyPeriodNode
+    ], []);
+
+    let contemporaryClimatologyExportFormData = new FormData([
+      climatologyMeanTypeNode
+    ], []);
+
+    let legacyClimatologyExportFormData = new FormData([
+      climatologyMeanTypeNode
     ], []);
 
     //Create Focus Managers
@@ -296,6 +300,7 @@ export class DatasetFormManagerService {
     let dsStatisticalFocusManager = new TimeSelectorData(dsPeriodStatisticalNode, periodPresent);
     let ndviFocusManager = new NDVITimeseriesData(dateNDVIStart, dateNDVIEnd, day16Period, yearPeriod, this.dateHandler, dateNDVIEnd);
     let rhFocusManager = new TimeseriesData(dateRHStart, lastDay, dayPeriod, monthPeriod, this.dateHandler, lastDay);
+    let climatologyFocusManager = new TimeSelectorData(climatologyPeriodNode, periodJanuary);
 
     //cleanup the timeseries refs in model
     //Create Datasets
@@ -354,12 +359,122 @@ export class DatasetFormManagerService {
     // });
 
     //climatologies
-    //set up 
-    // let meanTemperatureDay = new VisDatasetItem(false, true, "Celcius", "°C", "Mean Temperature", "Daily Mean Temperature", [-10, 35], [false, false], null, [], true, {
-    //   mean_type: "mean_month",
-    //   cl_mean: "january"
-    // });
+    let contemporaryRainfallClimatologySets = [];
+    let legacyRainfallClimatologySets = [];
+    let contemporaryMeanTemperatureClimatologySets = [];
+    let contemporaryMaxTemperatureClimatologySets = [];
+    let contemporaryMinTemperatureClimatologySets = [];
+    let legacyMeanTemperatureClimatologySets = [];
+    let legacyMaxTemperatureClimatologySets = [];
+    let legacyMinTemperatureClimatologySets = [];
     let months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+    for(let month of months) {
+      let capMonth = month.charAt(0).toUpperCase() + month.slice(1);
+      let contemporaryRainfallClimatology = new VisDatasetItem(false, true, "Millimeters", "mm", "Rainfall", `${capMonth} Mean Rainfall`, [0, 650], [true, false], climatologyFocusManager, [], false, {
+        mean_type: "mean_monthly",
+        cl_mean: month
+      });
+      let legacyRainfallClimatology = new VisDatasetItem(false, true, "Millimeters", "mm", "Rainfall", `${capMonth} Mean Rainfall`, [0, 650], [true, false], climatologyFocusManager, [], false, {
+        mean_type: "mean_monthly",
+        cl_mean: month
+      });
+      contemporaryRainfallClimatologySets.push(contemporaryRainfallClimatology);
+      legacyRainfallClimatologySets.push(legacyRainfallClimatology);
+      let contemporaryMeanTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Mean Temperature", `${capMonth} Mean Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+        mean_type: "mean_monthly",
+        cl_mean: month
+      });
+      let contemporaryMaxTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Maximum Temperature", `${capMonth} Maximum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+        mean_type: "mean_monthly",
+        cl_mean: month
+      });
+      let contemporaryMinTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Minimum Temperature", `${capMonth} Minimum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+        mean_type: "mean_monthly",
+        cl_mean: month
+      });
+      let legacyMeanTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Mean Temperature", `${capMonth} Mean Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+        mean_type: "mean_monthly",
+        cl_mean: month
+      });
+      let legacyMaxTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Maximum Temperature", `${capMonth} Maximum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+        mean_type: "mean_monthly",
+        cl_mean: month
+      });
+      let legacyMinTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Minimum Temperature", `${capMonth} Minimum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+        mean_type: "mean_monthly",
+        cl_mean: month
+      });
+      contemporaryMeanTemperatureClimatologySets.push(contemporaryMeanTemperatureClimatology);
+      contemporaryMaxTemperatureClimatologySets.push(contemporaryMaxTemperatureClimatology);
+      contemporaryMinTemperatureClimatologySets.push(contemporaryMinTemperatureClimatology);
+      legacyMeanTemperatureClimatologySets.push(legacyMeanTemperatureClimatology);
+      legacyMaxTemperatureClimatologySets.push(legacyMaxTemperatureClimatology);
+      legacyMinTemperatureClimatologySets.push(legacyMinTemperatureClimatology);
+    }
+    let yearsDecadal = ["1991-2000", "2001-2010", "2011-2020"];
+    for(let decade of yearsDecadal) {
+      let contemporaryRainfallClimatology = new VisDatasetItem(false, true, "Millimeters", "mm", "Rainfall", `${decade} Mean Rainfall`, [0, 10000], [true, false], climatologyFocusManager, [], false, {
+        mean_type: "mean_annual_decadal",
+        cl_mean: decade
+      });
+      contemporaryRainfallClimatologySets.push(contemporaryRainfallClimatology);
+      let contemporaryMeanTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Mean Temperature", `${decade} Mean Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+        mean_type: "mean_annual_decadal",
+        cl_mean: decade
+      });
+      let contemporaryMaxTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Maximum Temperature", `${decade} Maximum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+        mean_type: "mean_annual_decadal",
+        cl_mean: decade
+      });
+      let contemporaryMinTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Minimum Temperature", `${decade} Minimum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+        mean_type: "mean_annual_decadal",
+        cl_mean: decade
+      });
+      contemporaryMeanTemperatureClimatologySets.push(contemporaryMeanTemperatureClimatology);
+      contemporaryMaxTemperatureClimatologySets.push(contemporaryMaxTemperatureClimatology);
+      contemporaryMinTemperatureClimatologySets.push(contemporaryMinTemperatureClimatology);
+    }
+
+    let contemporaryRainfallClimatology = new VisDatasetItem(false, true, "Millimeters", "mm", "Rainfall", `1991-2020 Mean Rainfall`, [0, 10000], [true, false], climatologyFocusManager, [], false, {
+      mean_type: "mean_30yr_annual",
+      cl_mean: "1991-2020"
+    });
+    let legacyRainfallClimatology = new VisDatasetItem(false, true, "Millimeters", "mm", "Rainfall", `1991-2020 Mean Rainfall`, [0, 10000], [true, false], climatologyFocusManager, [], false, {
+      mean_type: "mean_30yr_annual",
+      cl_mean: "1991-2020"
+    });
+    contemporaryRainfallClimatologySets.push(contemporaryRainfallClimatology);
+    legacyRainfallClimatologySets.push(legacyRainfallClimatology);
+    let contemporaryMeanTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Mean Temperature", `1991-2020 Mean Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+      mean_type: "mean_30yr_annual",
+      cl_mean: "1991-2020"
+    });
+    let contemporaryMaxTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Maximum Temperature", `1991-2020 Maximum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+      mean_type: "mean_30yr_annual",
+      cl_mean: "1991-2020"
+    });
+    let contemporaryMinTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Minimum Temperature", `1991-2020 Minimum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+      mean_type: "mean_30yr_annual",
+      cl_mean: "1991-2020"
+    });
+    let legacyMeanTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Mean Temperature", `1991-2020 Mean Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+      mean_type: "mean_30yr_annual",
+      cl_mean: "1991-2020"
+    });
+    let legacyMaxTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Maximum Temperature", `1991-2020 Maximum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+      mean_type: "mean_30yr_annual",
+      cl_mean: "1991-2020"
+    });
+    let legacyMinTemperatureClimatology = new VisDatasetItem(false, true, "Celcius", "°C", "Minimum Temperature", `1991-2020 Minimum Temperature`, [-10, 35], [false, false], climatologyFocusManager, [], true, {
+      mean_type: "mean_30yr_annual",
+      cl_mean: "1991-2020"
+    });
+    contemporaryMeanTemperatureClimatologySets.push(contemporaryMeanTemperatureClimatology);
+    contemporaryMaxTemperatureClimatologySets.push(contemporaryMaxTemperatureClimatology);
+    contemporaryMinTemperatureClimatologySets.push(contemporaryMinTemperatureClimatology);
+    legacyMeanTemperatureClimatologySets.push(legacyMeanTemperatureClimatology);
+    legacyMaxTemperatureClimatologySets.push(legacyMaxTemperatureClimatology);
+    legacyMinTemperatureClimatologySets.push(legacyMinTemperatureClimatology);
 
     //////DS 
     let dsm = [["statistical", "Statistically Downscaled"], ["dynamical", "Dynamically Downscaled"]];
@@ -521,8 +636,14 @@ export class DatasetFormManagerService {
     let ndviDatasetDisplayData = new DisplayData("Normalized Difference Vegetation Index", "NDVI", "ndvi");
     let rhDatasetDisplayData = new DisplayData("Relative humidity data", "Relative Humidity", "rh");
 
-    let meanRainfallClimatologyDatasetDisplayData = new DisplayData("Mean Rainfall Climatologies", "Mean Rainfall", "mean_rf");
-    let meanTemperatureClimatologyDatasetDisplayData = new DisplayData("Mean Air Temperature Climatologies", "Mean Air Temperature", "mean_temp");
+    let contemporaryRainfallClimatologyDatasetDisplayData = new DisplayData("Mean rainfall climatologies", "Mean Rainfall", "contemporary_mean_rf_climatology");
+    let legacyRainfallClimatologyDatasetDisplayData = new DisplayData("Mean rainfall climatologies", "Mean Rainfall", "legacy_mean_rf_climatology");
+    let contemporaryMeanTemperatureClimatologyDatasetDisplayData = new DisplayData("Mean air temperature climatologies", "Mean Air Temperature", "contemporary_mean_temp_climatology");
+    let contemporaryMaxTemperatureClimatologyDatasetDisplayData = new DisplayData("Maximum air temperature climatologies", "Maximum Air Temperature", "contemporary_max_temp_climatology");
+    let contemporaryMinTemperatureClimatologyDatasetDisplayData = new DisplayData("Minimum air temperature climatologies", "Minimum Air Temperature", "contemporary_min_temp_climatology");
+    let legacyMeanTemperatureClimatologyDatasetDisplayData = new DisplayData("Mean air temperature climatologies", "Mean Air Temperature", "legacy_mean_temp_climatology");
+    let legacyMaxTemperatureClimatologyDatasetDisplayData = new DisplayData("Maximum air temperature climatologies", "Maximum Air Temperature", "legacy_max_temp_climatology");
+    let legacyMinTemperatureClimatologyDatasetDisplayData = new DisplayData("Minimum air temperature climatologies", "Minimum Air Temperature", "legacy_min_temp_climatology");
 
     let rainfallVisDataset = new Dataset<VisDatasetItem>(rainfallDatasetDisplayData, {
       datatype: "rainfall",
@@ -577,14 +698,44 @@ export class DatasetFormManagerService {
       //rhDayRaw
     ]);
 
-    // let dsTemperatureVisDataset = new Dataset<VisDatasetItem>(meanRainfallClimatologyDatasetDisplayData, {
-    //   datatype: "mean_rainfall_climatology",
-    //   type: "contemporary_climatology" 
-    // }, contemporaryClimatologyFormData, dsTemperatureItems);
-    // let dsTemperatureVisDataset = new Dataset<VisDatasetItem>(meanTemperatureClimatologyDatasetDisplayData, {
-    //   datatype: "mean_temperature_climatology",
-    //   type: "contemporary_climatology"
-    // }, contemporaryClimatologyFormData, dsTemperatureItems);
+    let contemporaryRainfallClimatologyVisDataset = new Dataset<VisDatasetItem>(contemporaryRainfallClimatologyDatasetDisplayData, {
+      datatype: "contemporary_climatology",
+      variable: "rainfall" 
+    }, contemporaryClimatologyFormData, contemporaryRainfallClimatologySets);
+    let legacyRainfallClimatologyVisDataset = new Dataset<VisDatasetItem>(legacyRainfallClimatologyDatasetDisplayData, {
+      datatype: "legacy_climatology",
+      variable: "rainfall"
+    }, legacyClimatologyFormData, legacyRainfallClimatologySets);
+    let contemporaryMeanTemperatureClimatologyVisDataset = new Dataset<VisDatasetItem>(contemporaryMeanTemperatureClimatologyDatasetDisplayData, {
+      datatype: "contemporary_climatology",
+      variable: "air_temperature",
+      aggregation: "mean"
+    }, contemporaryClimatologyFormData, contemporaryMeanTemperatureClimatologySets);
+    let contemporaryMaxTemperatureClimatologyVisDataset = new Dataset<VisDatasetItem>(contemporaryMaxTemperatureClimatologyDatasetDisplayData, {
+      datatype: "contemporary_climatology",
+      variable: "air_temperature",
+      aggregation: "max"
+    }, contemporaryClimatologyFormData, contemporaryMaxTemperatureClimatologySets);
+    let contemporaryMinTemperatureClimatologyVisDataset = new Dataset<VisDatasetItem>(contemporaryMinTemperatureClimatologyDatasetDisplayData, {
+      datatype: "contemporary_climatology",
+      variable: "air_temperature",
+      aggregation: "min"
+    }, contemporaryClimatologyFormData, contemporaryMinTemperatureClimatologySets);
+    let legacyMeanTemperatureClimatologyVisDataset = new Dataset<VisDatasetItem>(legacyMeanTemperatureClimatologyDatasetDisplayData, {
+      datatype: "legacy_climatology",
+      variable: "air_temperature",
+      aggregation: "mean"
+    }, legacyClimatologyFormData, legacyMeanTemperatureClimatologySets);
+    let legacyMaxTemperatureClimatologyVisDataset = new Dataset<VisDatasetItem>(legacyMaxTemperatureClimatologyDatasetDisplayData, {
+      datatype: "legacy_climatology",
+      variable: "air_temperature",
+      aggregation: "max"
+    }, legacyClimatologyFormData, legacyMaxTemperatureClimatologySets);
+    let legacyMinTemperatureClimatologyVisDataset = new Dataset<VisDatasetItem>(legacyMinTemperatureClimatologyDatasetDisplayData, {
+      datatype: "legacy_climatology",
+      variable: "air_temperature",
+      aggregation: "min"
+    }, legacyClimatologyFormData, legacyMinTemperatureClimatologySets);
 
 
 
@@ -596,6 +747,7 @@ export class DatasetFormManagerService {
     let geotiffFtype = new FileType("GeoTIFF", "tif", "Geotiff files are a variant of the TIFF file format which is used to store raster based data/graphics including georeferencing information.");
     let txtFtype = new FileType("Text", "txt", "A plaintext file.");
     let csvFtype = new FileType("Comma-Separated Values", "csv", "A text based file with data separated by commas.");
+    let pdfFtype = new FileType("PDF", "pdf", "A portable document format file.");
     //file display data
     let rainfallMapDisplayData = new DisplayData("A gridded rainfall map representing estimated rainfall values over the state of Hawaiʻi.", "Rainfall Map", "data_map");
     let temperatureMapDisplayData = new DisplayData("A gridded temperature map representing the estimated temperature values over the state of Hawaiʻi.", "Temperature Map", "data_map");
@@ -610,6 +762,8 @@ export class DatasetFormManagerService {
     let stationPartialDisplayData = new DisplayData("Processed station data including each station's metadata and values over a period of time", "Station Data", "station_data");
     let ndviDisplayData = new DisplayData("A gridded normalized difference vegetation index (NDVI) map representing estimated values over the state of Hawaiʻi.", "NDVI Map", "data_map");
     let rhMapDisplayData = new DisplayData("A gridded relative humidity map representing estimated relative humidity percentages over the state of Hawaiʻi.", "Relative Humidity Map", "data_map");
+    let climatologyRainfallMapDisplayData = new DisplayData("A gridded map displaying the average estimated rainfall over the selected time period.", "Rainfall Map", "data_map");
+    let climatologyTemperatureMapDisplayData = new DisplayData("A gridded map displaying the average estimated mean temperature over the selected time period.", "Temperature Map", "data_map");
 
     //additional property nodes
     
@@ -637,6 +791,10 @@ export class DatasetFormManagerService {
     let dsPeriodDynamicalFutureProperty = new FileProperty(dsPeriodDynamicalNode.filter(["late_d"]), ["late_d"]);
     let ndviPeriodProperty = new FileProperty(periodNode.filter(["16day"]), ["16day"]);
 
+    let monthClimatologyProperty = new FileProperty(climatologyPeriodNode.filter(["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]), ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]);
+    let decadalClimatologyProperty = new FileProperty(climatologyPeriodNode.filter(["1991-2000", "2001-2010", "2011-2020"]), ["1991-2000", "2001-2010", "2011-2020"]);
+    let yr30ClimatologyProperty = new FileProperty(climatologyPeriodNode.filter(["1991-2020"]), ["1991-2020"]);
+
     //package files
     let rainfallMapFile = new FileData(rainfallMapDisplayData, geotiffFtype, ["metadata"]);
     let legacyRainfallMapFile = new FileData(rainfallMapDisplayData, geotiffFtype, []);
@@ -652,6 +810,9 @@ export class DatasetFormManagerService {
     let stationFile = new FileData(stationPartialDisplayData, csvFtype, []);
     let ndviMapFile = new FileData(ndviDisplayData, geotiffFtype, []);
     let rhMapFile = new FileData(rhMapDisplayData, geotiffFtype, ["metadata"]);
+    let climatologyRainfallMapFile = new FileData(climatologyRainfallMapDisplayData, geotiffFtype, ["metadata"]);
+    let climatologyTemperatureMapFile = new FileData(climatologyTemperatureMapDisplayData, geotiffFtype, ["metadata"]);
+    let legacyClimatologyMetadataFile = new FileData(metadataDisplayData, pdfFtype, []);
 
     //use if you want to add labeling to file groups in the future, unused for now
     // let griddedMapDisplayData = new DisplayData("Gridded mapped data files and metadata", "Map Data", "map_data");
@@ -683,6 +844,16 @@ export class DatasetFormManagerService {
     let rhDayMapFileGroup = new FileGroup(new DisplayData("", "", "s"), [rhMapFile, metadataFile], [allExtentProperty, percentUnitsProperty]);
     let rhDayStationFileGroup = new FileGroup(new DisplayData("", "", "t"), [stationFile], [statewideProperty, percentUnitsProperty, fillPartialProperty]);
 
+    let contemporaryClimatologyRainfallMonthFileGroup = new FileGroup(new DisplayData("", "", "u"), [climatologyRainfallMapFile], [statewideProperty, monthClimatologyProperty]);
+    let contemporaryClimatologyRainfallDecadeFileGroup = new FileGroup(new DisplayData("", "", "v"), [climatologyRainfallMapFile], [statewideProperty, decadalClimatologyProperty]);
+    let contemporaryClimatologyRainfall30yrFileGroup = new FileGroup(new DisplayData("", "", "w"), [climatologyRainfallMapFile], [statewideProperty, yr30ClimatologyProperty]);
+    let contemporaryClimatologyTemperatureMonthFileGroup = new FileGroup(new DisplayData("", "", "x"), [climatologyTemperatureMapFile], [statewideProperty, monthClimatologyProperty]);
+    let contemporaryClimatologyTemperatureDecadeFileGroup = new FileGroup(new DisplayData("", "", "y"), [climatologyTemperatureMapFile], [statewideProperty, decadalClimatologyProperty]);
+    let contemporaryClimatologyTemperature30yrFileGroup = new FileGroup(new DisplayData("", "", "z"), [climatologyTemperatureMapFile], [statewideProperty, yr30ClimatologyProperty]);
+    let legacyClimatologyRainfallMonthFileGroup = new FileGroup(new DisplayData("", "", "aa"), [climatologyRainfallMapFile, legacyClimatologyMetadataFile], [allExtentProperty, monthClimatologyProperty]);
+    let legacyClimatologyRainfall30yrFileGroup = new FileGroup(new DisplayData("", "", "ab"), [climatologyRainfallMapFile, legacyClimatologyMetadataFile], [allExtentProperty, yr30ClimatologyProperty]);
+    let legacyClimatologyTemperatureMonthFileGroup = new FileGroup(new DisplayData("", "", "ac"), [climatologyTemperatureMapFile, legacyClimatologyMetadataFile], [statewideProperty, monthClimatologyProperty]);
+    let legacyClimatologyTemperature30yrFileGroup = new FileGroup(new DisplayData("", "", "ad"), [climatologyTemperatureMapFile, legacyClimatologyMetadataFile], [statewideProperty, yr30ClimatologyProperty]);
 
     //note these can be combined with the vis timeseries stuff, just need to rework vis timeseries data to use this
     let rainfallMonthTimeseriesHandler = new TimeseriesHandler(date1990, lastMonth, monthPeriod, this.dateHandler);
@@ -773,6 +944,38 @@ export class DatasetFormManagerService {
       period: "16day"
     }, "NDVI", ndviTimeseriesHandler);
 
+    //Climatologies
+    let contemporaryClimatologyRainfallMonthExportItem = new ExportDatasetItem([contemporaryClimatologyRainfallMonthFileGroup], {
+      mean_type: "mean_monthly"
+    }, "Contemporary Mean Monthly Rainfall Climatologies");
+    let contemporaryClimatologyRainfallDecadeExportItem = new ExportDatasetItem([contemporaryClimatologyRainfallDecadeFileGroup], {
+      mean_type: "mean_annual_decadal"
+    }, "Contemporary Mean Annual Decadal Rainfall Climatologies");
+    let contemporaryClimatologyRainfall30yrExportItem = new ExportDatasetItem([contemporaryClimatologyRainfall30yrFileGroup], {
+      mean_type: "mean_30yr_annual"
+    }, "Contemporary Mean Annual 30 Year Rainfall Climatologies");
+    let contemporaryClimatologyTemperatureMonthExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureMonthFileGroup], {
+      mean_type: "mean_monthly"
+    }, "Contemporary Mean Monthly Temperature Climatologies");
+    let contemporaryClimatologyTemperatureDecadeExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureDecadeFileGroup], {
+      mean_type: "mean_annual_decadal"
+    }, "Contemporary Mean Annual Decadal Temperature Climatologies");
+    let contemporaryClimatologyTemperature30yrExportItem = new ExportDatasetItem([contemporaryClimatologyTemperature30yrFileGroup], {
+      mean_type: "mean_30yr_annual"
+    }, "Contemporary Mean Annual 30 Year Temperature Climatologies");
+    let legacyClimatologyRainfallMonthExportItem = new ExportDatasetItem([legacyClimatologyRainfallMonthFileGroup], {
+      mean_type: "mean_monthly"
+    }, "Contemporary Mean Monthly Rainfall Climatologies");
+    let legacyClimatologyRainfall30yrExportItem = new ExportDatasetItem([legacyClimatologyRainfall30yrFileGroup], {
+      mean_type: "mean_30yr_annual"
+    }, "Contemporary Mean Annual 30 Year Rainfall Climatologies");
+    let legacyClimatologyTemperatureMonthExportItem = new ExportDatasetItem([legacyClimatologyTemperatureMonthFileGroup], {
+      mean_type: "mean_monthly"
+    }, "Contemporary Mean Monthly Temperature Climatologies");
+    let legacyClimatologyTemperature30yrExportItem = new ExportDatasetItem([legacyClimatologyTemperature30yrFileGroup], {
+      mean_type: "mean_30yr_annual"
+    }, "Contemporary Mean Annual 30 Year Temperature Climatologies");
+
     ////Datasets
     let rainfallExportDataset = new Dataset<ExportDatasetItem>(rainfallDatasetDisplayData, {
       datatype: "rainfall",
@@ -830,6 +1033,73 @@ export class DatasetFormManagerService {
       rhDayExportItem
     ]);
 
+    let contemporaryClimatologyRainfallExportDataset = new Dataset<ExportDatasetItem>(contemporaryRainfallClimatologyDatasetDisplayData, {
+      datatype: "contemporary_climatology",
+      variable: "rainfall"
+    }, contemporaryClimatologyExportFormData, [
+      contemporaryClimatologyRainfallMonthExportItem,
+      contemporaryClimatologyRainfallDecadeExportItem,
+      contemporaryClimatologyRainfall30yrExportItem
+    ]);
+    let contemporaryClimatologyMeanTemperatureExportDataset = new Dataset<ExportDatasetItem>(contemporaryMeanTemperatureClimatologyDatasetDisplayData, {
+      datatype: "contemporary_climatology",
+      variable: "air_temperature",
+      aggregation: "mean"
+    }, contemporaryClimatologyExportFormData, [
+      contemporaryClimatologyTemperatureMonthExportItem,
+      contemporaryClimatologyTemperatureDecadeExportItem,
+      contemporaryClimatologyTemperature30yrExportItem
+    ]);
+    let contemporaryClimatologyMaxTemperatureExportDataset = new Dataset<ExportDatasetItem>(contemporaryMaxTemperatureClimatologyDatasetDisplayData, {
+      datatype: "contemporary_climatology",
+      variable: "air_temperature",
+      aggregation: "max"
+    }, contemporaryClimatologyExportFormData, [
+      contemporaryClimatologyTemperatureMonthExportItem,
+      contemporaryClimatologyTemperatureDecadeExportItem,
+      contemporaryClimatologyTemperature30yrExportItem
+    ]);
+    let contemporaryClimatologyMinTemperatureExportDataset = new Dataset<ExportDatasetItem>(contemporaryMinTemperatureClimatologyDatasetDisplayData, {
+      datatype: "contemporary_climatology",
+      variable: "air_temperature",
+      aggregation: "min"
+    }, contemporaryClimatologyExportFormData, [
+      contemporaryClimatologyTemperatureMonthExportItem,
+      contemporaryClimatologyTemperatureDecadeExportItem,
+      contemporaryClimatologyTemperature30yrExportItem
+    ]);
+    let legacyClimatologyRainfallExportDataset = new Dataset<ExportDatasetItem>(legacyRainfallClimatologyDatasetDisplayData, {
+      datatype: "legacy_climatology",
+      variable: "rainfall"
+    }, legacyClimatologyExportFormData, [
+      legacyClimatologyRainfallMonthExportItem,
+      legacyClimatologyRainfall30yrExportItem
+    ]);
+    let legacyClimatologyMeanTemperatureExportDataset = new Dataset<ExportDatasetItem>(legacyMeanTemperatureClimatologyDatasetDisplayData, {
+      datatype: "legacy_climatology",
+      variable: "air_temperature",
+      aggregation: "mean"
+    }, legacyClimatologyExportFormData, [
+      legacyClimatologyTemperatureMonthExportItem,
+      legacyClimatologyTemperature30yrExportItem
+    ]);
+    let legacyClimatologyMaxTemperatureExportDataset = new Dataset<ExportDatasetItem>(legacyMaxTemperatureClimatologyDatasetDisplayData, {
+      datatype: "legacy_climatology",
+      variable: "air_temperature",
+      aggregation: "max"
+    }, legacyClimatologyExportFormData, [
+      legacyClimatologyTemperatureMonthExportItem,
+      legacyClimatologyTemperature30yrExportItem
+    ]);
+    let legacyClimatologyMinTemperatureExportDataset = new Dataset<ExportDatasetItem>(legacyMinTemperatureClimatologyDatasetDisplayData, {
+      datatype: "legacy_climatology",
+      variable: "air_temperature",
+      aggregation: "min"
+    }, legacyClimatologyExportFormData, [
+      legacyClimatologyTemperatureMonthExportItem,
+      legacyClimatologyTemperature30yrExportItem
+    ]);
+
 
 
     ///////////////////////////////////////////////////////////////////
@@ -839,25 +1109,30 @@ export class DatasetFormManagerService {
     let historicalRainfallGrouperDisplayData = new DisplayData("Datasets using empirical rainfall data.", "Historical Rainfall", "historical_rainfall");
     let historicalTemperatureGrouperDisplayData = new DisplayData("Datasets using empirical temperature data", "Historical Temperature", "historical_temperature");
     let dsGrouperDisplayData = new DisplayData("Future climate projections using downscaling prediction methods.", "Future Climate Projections", "downscaled");
+    let contemporaryClimatologyGrouperDisplayData = new DisplayData("Contemporary climatologies.", "Contemporary Climatology", "contemporary_climatology");
+    let legacyClimatologyGrouperDisplayData = new DisplayData("Legacy Climatologies.", "Legacy Climatology", "legacy_climatology");
     let datasetFormDisplayData = new DisplayData("Select the type of data you would like to view. Hover over an option for a description of the dataset.", "Dataset", "dataset");
     //vis dataset groups
-    let visDatasets = [rainfallVisDataset, legacyRainfallVisDataset, maxTemperatureVisDataset, minTemperatureVisDataset, meanTemperatureVisDataset, dsRainfallVisDataset, dsTemperatureVisDataset, ndviVisDataset, rhVisDataset];
+    let visDatasets = [rainfallVisDataset, legacyRainfallVisDataset, maxTemperatureVisDataset, minTemperatureVisDataset, meanTemperatureVisDataset, dsRainfallVisDataset, dsTemperatureVisDataset, ndviVisDataset, rhVisDataset, contemporaryRainfallClimatologyVisDataset, legacyRainfallClimatologyVisDataset, contemporaryMeanTemperatureClimatologyVisDataset, contemporaryMaxTemperatureClimatologyVisDataset, contemporaryMinTemperatureClimatologyVisDataset, legacyMeanTemperatureClimatologyVisDataset, legacyMaxTemperatureClimatologyVisDataset, legacyMinTemperatureClimatologyVisDataset];
     let visDatasetSingles: Dataset<VisDatasetItem>[] = [ndviVisDataset, rhVisDataset];
     let visDatasetGroupers: DatasetSelectorGroup[] = [
       new DatasetSelectorGroup(historicalRainfallGrouperDisplayData, [rainfallVisDataset, legacyRainfallVisDataset]),
       new DatasetSelectorGroup(historicalTemperatureGrouperDisplayData, [maxTemperatureVisDataset, minTemperatureVisDataset, meanTemperatureVisDataset]),
-      new DatasetSelectorGroup(dsGrouperDisplayData, [dsRainfallVisDataset, dsTemperatureVisDataset])
+      new DatasetSelectorGroup(dsGrouperDisplayData, [dsRainfallVisDataset, dsTemperatureVisDataset]),
+      new DatasetSelectorGroup(contemporaryClimatologyGrouperDisplayData, [contemporaryRainfallClimatologyVisDataset, contemporaryMeanTemperatureClimatologyVisDataset, contemporaryMaxTemperatureClimatologyVisDataset, contemporaryMinTemperatureClimatologyVisDataset]),
+      new DatasetSelectorGroup(legacyClimatologyGrouperDisplayData, [legacyRainfallClimatologyVisDataset, legacyMeanTemperatureClimatologyVisDataset, legacyMaxTemperatureClimatologyVisDataset, legacyMinTemperatureClimatologyVisDataset])
     ];
     let visDatasetFormData = new DatasetFormData(datasetFormDisplayData, visDatasetSingles, visDatasetGroupers);
 
     //export dataset groups
-    let exportDatasets = [rainfallExportDataset, legacyRainfallExportDataset, maxTemperatureExportDataset, minTemperatureExportDataset, meanTemperatureExportDataset, dsRainfallExportDataset, dsTemperatureExportDataset, ndviExportDataset, rhExportDataset];
-    //to reenable ndvi uncomment
+    let exportDatasets = [rainfallExportDataset, legacyRainfallExportDataset, maxTemperatureExportDataset, minTemperatureExportDataset, meanTemperatureExportDataset, dsRainfallExportDataset, dsTemperatureExportDataset, ndviExportDataset, rhExportDataset, contemporaryClimatologyRainfallExportDataset, legacyClimatologyRainfallExportDataset, contemporaryClimatologyMeanTemperatureExportDataset, contemporaryClimatologyMaxTemperatureExportDataset, contemporaryClimatologyMinTemperatureExportDataset, legacyClimatologyMeanTemperatureExportDataset, legacyClimatologyMaxTemperatureExportDataset, legacyClimatologyMinTemperatureExportDataset];
     let exportDatasetSingles: Dataset<ExportDatasetItem>[] = [ndviExportDataset, rhExportDataset];
     let exportDatasetGroupers: DatasetSelectorGroup[] = [
       new DatasetSelectorGroup(historicalRainfallGrouperDisplayData, [rainfallExportDataset, legacyRainfallExportDataset]),
       new DatasetSelectorGroup(historicalTemperatureGrouperDisplayData, [maxTemperatureExportDataset, minTemperatureExportDataset, meanTemperatureExportDataset]),
-      new DatasetSelectorGroup(dsGrouperDisplayData, [dsRainfallExportDataset, dsTemperatureExportDataset])
+      new DatasetSelectorGroup(dsGrouperDisplayData, [dsRainfallExportDataset, dsTemperatureExportDataset]),
+      new DatasetSelectorGroup(contemporaryClimatologyGrouperDisplayData, [contemporaryClimatologyRainfallExportDataset, contemporaryClimatologyMeanTemperatureExportDataset, contemporaryClimatologyMaxTemperatureExportDataset, contemporaryClimatologyMinTemperatureExportDataset]),
+      new DatasetSelectorGroup(legacyClimatologyGrouperDisplayData, [legacyClimatologyRainfallExportDataset, legacyClimatologyMeanTemperatureExportDataset, legacyClimatologyMaxTemperatureExportDataset, legacyClimatologyMinTemperatureExportDataset])
     ];
     let exportDatasetFormData = new DatasetFormData(datasetFormDisplayData, exportDatasetSingles, exportDatasetGroupers);
 
@@ -1134,7 +1409,7 @@ type StateData<T extends DatasetItem> = {
 }
 
 
-abstract class DatasetItem {
+export abstract class DatasetItem {
   private _fieldData: {[tag: string]: DisplayData};
   private _rasterParams: StringMap;
   private _stationParams: StringMap;
