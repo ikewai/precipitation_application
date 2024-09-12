@@ -111,7 +111,7 @@ export class DatasetFormManagerService {
       type: "direct"
     }, null);
 
-    
+
     let viewTypeDisplayData = new DisplayData("How should the data be viewed? Either view the data directly or relative to present conditions.", "View Type", "view");
     let viewTypeNodeRf = new FormNode(viewTypeDisplayData, [absoluteChangeView, percentChangeView, valueView], absoluteChangeView);
     let viewTypeNodeTemp = new FormNode(viewTypeDisplayData, [absoluteChangeView, valueView], absoluteChangeView);
@@ -138,7 +138,7 @@ export class DatasetFormManagerService {
       seasonDry,
       seasonWet
     ]);
-    
+
     let dsPeriodStatisticalNode = new FormNode(new DisplayData("The period of coverage for the data to display, including baseline present day data and future projections", "Data Period", "ds_period"), [
       periodPresent,
       periodMid,
@@ -205,7 +205,7 @@ export class DatasetFormManagerService {
     // private percentRange: [number, number] = [-50, 50];
     // private absoluteRange: [number, number] = [-1000, 1000];
 
-    
+
 
 
     ////categories
@@ -476,7 +476,7 @@ export class DatasetFormManagerService {
     legacyMaxTemperatureClimatologySets.push(legacyMaxTemperatureClimatology);
     legacyMinTemperatureClimatologySets.push(legacyMinTemperatureClimatology);
 
-    //////DS 
+    //////DS
     let dsm = [["statistical", "Statistically Downscaled"], ["dynamical", "Dynamically Downscaled"]];
     let model = [["rcp45", "RCP 4.5"], ["rcp85", "RCP 8.5"]];
     let season = [["annual", "Annual", [0, 10000]], ["wet", "Wet Season", [0, 5000]], ["dry", "Dry Season", [0, 5000]]];
@@ -700,7 +700,7 @@ export class DatasetFormManagerService {
 
     let contemporaryRainfallClimatologyVisDataset = new Dataset<VisDatasetItem>(contemporaryRainfallClimatologyDatasetDisplayData, {
       datatype: "contemporary_climatology",
-      variable: "rainfall" 
+      variable: "rainfall"
     }, contemporaryClimatologyFormData, contemporaryRainfallClimatologySets);
     let legacyRainfallClimatologyVisDataset = new Dataset<VisDatasetItem>(legacyRainfallClimatologyDatasetDisplayData, {
       datatype: "legacy_climatology",
@@ -766,13 +766,13 @@ export class DatasetFormManagerService {
     let climatologyTemperatureMapDisplayData = new DisplayData("A gridded map displaying the average estimated mean temperature over the selected time period.", "Temperature Map", "data_map");
 
     //additional property nodes
-    
+
 
 
 
 
     ////nodes
-    
+
     //fileProperties
     let allExtentProperty = new FileProperty(extentNode, ["statewide"]);
     let statewideProperty = new FileProperty(extentNode.filter(["statewide"]), ["statewide"]);
@@ -810,8 +810,10 @@ export class DatasetFormManagerService {
     let stationFile = new FileData(stationPartialDisplayData, csvFtype, []);
     let ndviMapFile = new FileData(ndviDisplayData, geotiffFtype, []);
     let rhMapFile = new FileData(rhMapDisplayData, geotiffFtype, ["metadata"]);
-    let climatologyRainfallMapFile = new FileData(climatologyRainfallMapDisplayData, geotiffFtype, ["metadata"]);
-    let climatologyTemperatureMapFile = new FileData(climatologyTemperatureMapDisplayData, geotiffFtype, ["metadata"]);
+    let legacyClimatologyRainfallMapFile = new FileData(climatologyRainfallMapDisplayData, geotiffFtype, ["metadata"]);
+    let legacyClimatologyTemperatureMapFile = new FileData(climatologyTemperatureMapDisplayData, geotiffFtype, ["metadata"]);
+    let contemporaryClimatologyRainfallMapFile = new FileData(climatologyRainfallMapDisplayData, geotiffFtype, []);
+    let contemporaryClimatologyTemperatureMapFile = new FileData(climatologyTemperatureMapDisplayData, geotiffFtype, []);
     let legacyClimatologyMetadataFile = new FileData(metadataDisplayData, pdfFtype, []);
 
     //use if you want to add labeling to file groups in the future, unused for now
@@ -844,16 +846,16 @@ export class DatasetFormManagerService {
     let rhDayMapFileGroup = new FileGroup(new DisplayData("", "", "s"), [rhMapFile, metadataFile], [allExtentProperty, percentUnitsProperty]);
     let rhDayStationFileGroup = new FileGroup(new DisplayData("", "", "t"), [stationFile], [statewideProperty, percentUnitsProperty, fillPartialProperty]);
 
-    let contemporaryClimatologyRainfallMonthFileGroup = new FileGroup(new DisplayData("", "", "u"), [climatologyRainfallMapFile], [statewideProperty, monthClimatologyProperty]);
-    let contemporaryClimatologyRainfallDecadeFileGroup = new FileGroup(new DisplayData("", "", "v"), [climatologyRainfallMapFile], [statewideProperty, decadalClimatologyProperty]);
-    let contemporaryClimatologyRainfall30yrFileGroup = new FileGroup(new DisplayData("", "", "w"), [climatologyRainfallMapFile], [statewideProperty, yr30ClimatologyProperty]);
-    let contemporaryClimatologyTemperatureMonthFileGroup = new FileGroup(new DisplayData("", "", "x"), [climatologyTemperatureMapFile], [statewideProperty, monthClimatologyProperty]);
-    let contemporaryClimatologyTemperatureDecadeFileGroup = new FileGroup(new DisplayData("", "", "y"), [climatologyTemperatureMapFile], [statewideProperty, decadalClimatologyProperty]);
-    let contemporaryClimatologyTemperature30yrFileGroup = new FileGroup(new DisplayData("", "", "z"), [climatologyTemperatureMapFile], [statewideProperty, yr30ClimatologyProperty]);
-    let legacyClimatologyRainfallMonthFileGroup = new FileGroup(new DisplayData("", "", "aa"), [climatologyRainfallMapFile, legacyClimatologyMetadataFile], [allExtentProperty, monthClimatologyProperty]);
-    let legacyClimatologyRainfall30yrFileGroup = new FileGroup(new DisplayData("", "", "ab"), [climatologyRainfallMapFile, legacyClimatologyMetadataFile], [allExtentProperty, yr30ClimatologyProperty]);
-    let legacyClimatologyTemperatureMonthFileGroup = new FileGroup(new DisplayData("", "", "ac"), [climatologyTemperatureMapFile, legacyClimatologyMetadataFile], [statewideProperty, monthClimatologyProperty]);
-    let legacyClimatologyTemperature30yrFileGroup = new FileGroup(new DisplayData("", "", "ad"), [climatologyTemperatureMapFile, legacyClimatologyMetadataFile], [statewideProperty, yr30ClimatologyProperty]);
+    let contemporaryClimatologyRainfallMonthFileGroup = new FileGroup(new DisplayData("", "", "u"), [contemporaryClimatologyRainfallMapFile], [statewideProperty, monthClimatologyProperty]);
+    let contemporaryClimatologyRainfallDecadeFileGroup = new FileGroup(new DisplayData("", "", "v"), [contemporaryClimatologyRainfallMapFile], [statewideProperty, decadalClimatologyProperty]);
+    let contemporaryClimatologyRainfall30yrFileGroup = new FileGroup(new DisplayData("", "", "w"), [contemporaryClimatologyRainfallMapFile], [statewideProperty, yr30ClimatologyProperty]);
+    let contemporaryClimatologyTemperatureMonthFileGroup = new FileGroup(new DisplayData("", "", "x"), [contemporaryClimatologyTemperatureMapFile], [statewideProperty, monthClimatologyProperty]);
+    let contemporaryClimatologyTemperatureDecadeFileGroup = new FileGroup(new DisplayData("", "", "y"), [contemporaryClimatologyTemperatureMapFile], [statewideProperty, decadalClimatologyProperty]);
+    let contemporaryClimatologyTemperature30yrFileGroup = new FileGroup(new DisplayData("", "", "z"), [contemporaryClimatologyTemperatureMapFile], [statewideProperty, yr30ClimatologyProperty]);
+    let legacyClimatologyRainfallMonthFileGroup = new FileGroup(new DisplayData("", "", "aa"), [legacyClimatologyRainfallMapFile, legacyClimatologyMetadataFile], [allExtentProperty, monthClimatologyProperty]);
+    let legacyClimatologyRainfall30yrFileGroup = new FileGroup(new DisplayData("", "", "ab"), [legacyClimatologyRainfallMapFile, legacyClimatologyMetadataFile], [allExtentProperty, yr30ClimatologyProperty]);
+    let legacyClimatologyTemperatureMonthFileGroup = new FileGroup(new DisplayData("", "", "ac"), [legacyClimatologyTemperatureMapFile, legacyClimatologyMetadataFile], [statewideProperty, monthClimatologyProperty]);
+    let legacyClimatologyTemperature30yrFileGroup = new FileGroup(new DisplayData("", "", "ad"), [legacyClimatologyTemperatureMapFile, legacyClimatologyMetadataFile], [statewideProperty, yr30ClimatologyProperty]);
 
     //note these can be combined with the vis timeseries stuff, just need to rework vis timeseries data to use this
     let rainfallMonthTimeseriesHandler = new TimeseriesHandler(date1990, lastMonth, monthPeriod, this.dateHandler);

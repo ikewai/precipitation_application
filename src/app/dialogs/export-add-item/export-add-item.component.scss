@@ -59,8 +59,15 @@ p {
 }
 
 .form-body {
-  overflow-y: auto;
+  overflow: auto;
   padding-left: 20px;
+}
+
+.tab-content {
+  padding-left: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .control-subgroup {
@@ -69,6 +76,7 @@ p {
 
 .control-group {
   padding-top: 20px;
+  padding-right: 20px;
 }
 
 
@@ -153,7 +161,16 @@ h3 {
   margin-bottom: 20px;
 }
 
+.file-group-container {
+  min-width: fit-content;
+  padding-right: 20px;
+}
+
 .date-select {
   display: inline-block;
   padding-right: 20px;
+}
+
+.tab-label {
+  cursor: pointer;
 }

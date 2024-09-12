@@ -81,13 +81,13 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
     let options = {
       root: document.documentElement
     };
-  
+
     let observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         callback(entry.intersectionRatio > 0, observer);
       });
     }, options);
-  
+
     observer.observe(element);
   }
 
