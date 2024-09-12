@@ -39,29 +39,23 @@ export class ExportAddItemComponent implements AfterViewInit {
     this._formManager = formService.exportFormManager;
     this.initializeControls(data);
     this.setupDatasetData();
-    console.log(data, this.formData.datasetItem.timeseriesHandler);
-    // this.setControlValues(formData.values);
-    // this.updateDataset();
   }
 
 
   ngAfterViewInit() {
-    //why break????
-    if(this.initTabs) {
-      this.t1.selectedIndex = this.initTabs[0][0];
-      if(this.initTabs.length > 1) {
-        setTimeout(() => {
-
-          console.log(this.initTabs[0], this.t2.toArray());
+    setTimeout(() => {
+      if(this.initTabs) {
+        this.t1.selectedIndex = this.initTabs[0][0];
+        if(this.initTabs.length > 1) {
           let [ groupIndex, t2i ] = this.initTabs[1];
           this.t2.toArray()[groupIndex].selectedIndex = t2i;
-          this.initTabs = undefined;
-        }, 0);
+        }
+        setTimeout(() => {
+            this.initTabs = undefined;
+        }, 400);
       }
-      else {
-        this.initTabs = undefined;
-      }
-    }
+    }, 400);
+    
   }
 
   respondToVisibility(element: HTMLElement, callback: (intersects: boolean, observer: IntersectionObserver) => any) {
@@ -79,10 +73,11 @@ export class ExportAddItemComponent implements AfterViewInit {
   }
 
   changeDataset() {
+    window.dispatchEvent(new Event("resize"));
+    //already set if being initialized
     if(this.initTabs) {
       return;
     }
-    window.dispatchEvent(new Event("resize"));
     let t1i = this.t1.selectedIndex;
     let datatype = null;
     if(this.datasetData[t1i].type == "group") {
@@ -131,9 +126,8 @@ export class ExportAddItemComponent implements AfterViewInit {
     };
     let formData: ActiveFormData<ExportDatasetItem>;
     if(initValues) {
-      console.log(initValues.dataset);
       this.initTabs = initValues.tabs;
-      formData = this._formManager.setValues(initValues.dataset)
+      formData = this._formManager.setValues(initValues.dataset);
     }
     else {
       formData = this._formManager.getFormData();

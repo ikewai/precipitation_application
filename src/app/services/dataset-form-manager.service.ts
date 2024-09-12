@@ -967,16 +967,16 @@ export class DatasetFormManagerService {
     }, "Contemporary Mean Annual 30 Year Temperature Climatologies");
     let legacyClimatologyRainfallMonthExportItem = new ExportDatasetItem([legacyClimatologyRainfallMonthFileGroup], {
       mean_type: "mean_monthly"
-    }, "Contemporary Mean Monthly Rainfall Climatologies");
+    }, "Legacy Mean Monthly Rainfall Climatologies");
     let legacyClimatologyRainfall30yrExportItem = new ExportDatasetItem([legacyClimatologyRainfall30yrFileGroup], {
       mean_type: "mean_30yr_annual"
-    }, "Contemporary Mean Annual 30 Year Rainfall Climatologies");
+    }, "Legacy Mean Annual 30 Year Rainfall Climatologies");
     let legacyClimatologyTemperatureMonthExportItem = new ExportDatasetItem([legacyClimatologyTemperatureMonthFileGroup], {
       mean_type: "mean_monthly"
-    }, "Contemporary Mean Monthly Temperature Climatologies");
+    }, "Legacy Mean Monthly Temperature Climatologies");
     let legacyClimatologyTemperature30yrExportItem = new ExportDatasetItem([legacyClimatologyTemperature30yrFileGroup], {
       mean_type: "mean_30yr_annual"
-    }, "Contemporary Mean Annual 30 Year Temperature Climatologies");
+    }, "Legacy Mean Annual 30 Year Temperature Climatologies");
 
     ////Datasets
     let rainfallExportDataset = new Dataset<ExportDatasetItem>(rainfallDatasetDisplayData, {
