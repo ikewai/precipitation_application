@@ -202,6 +202,7 @@ export class DataSetFormComponent implements OnInit, AfterViewInit {
     else if(this.dataset.focusManager.type == "selector") {
       let focusData = new FocusData("selector", undefined, {}, null);
       this.paramService.pushFocusData(focusData);
+      this.optionNodes = [];
     }
     else {
       this.optionNodes = [];
