@@ -1,10 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatTabGroup } from '@angular/material';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
 import { StringMap } from 'src/app/models/types';
-import { ActiveFormData, DatasetFormManagerService, ExportDatasetItem, FormManager, FileGroup, FileProperty, FileData, UnitOfTime } from 'src/app/services/dataset-form-manager.service';
+import { ActiveFormData, DatasetFormManagerService, ExportDatasetItem, FormManager, FileProperty, FileData, UnitOfTime, DatasetSelectorGroup, FormValue } from 'src/app/services/dataset-form-manager.service';
 import { DateManagerService } from 'src/app/services/dateManager/date-manager.service';
 
 @Component({
@@ -12,12 +13,21 @@ import { DateManagerService } from 'src/app/services/dateManager/date-manager.se
   templateUrl: './export-add-item.component.html',
   styleUrls: ['./export-add-item.component.scss']
 })
-export class ExportAddItemComponent {
+export class ExportAddItemComponent implements AfterViewInit {
+  private static readonly FORM_ORDER = ["historical_rainfall", "historical_temperature", "rh", "ndvi", "downscaled", "contemporary_climatology", "legacy_climatology"];
+
+  @ViewChild("t1", {static: false}) t1: MatTabGroup;
+  @ViewChildren("t2") t2: QueryList<MatTabGroup>;
+  @ViewChild("tabContainer", {static: false}) tabContainer: ElementRef;
+
+  datasetData: DatasetData[];
+
   formData: ActiveFormData<ExportDatasetItem>;
   controls: ExportControlData;
   private lockDatasetUpdates: boolean;
 
   private _formManager: FormManager<ExportDatasetItem>;
+  private initTabs: number[][];
 
   numSelected: number;
 
@@ -28,19 +38,102 @@ export class ExportAddItemComponent {
     });
     this._formManager = formService.exportFormManager;
     this.initializeControls(data);
+    this.setupDatasetData();
   }
 
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if(this.initTabs) {
+        this.t1.selectedIndex = this.initTabs[0][0];
+        if(this.initTabs.length > 1) {
+          let [ groupIndex, t2i ] = this.initTabs[1];
+          this.t2.toArray()[groupIndex].selectedIndex = t2i;
+        }
+        setTimeout(() => {
+            this.initTabs = undefined;
+        }, 400);
+      }
+    }, 400);
+    
+  }
+
+  respondToVisibility(element: HTMLElement, callback: (intersects: boolean, observer: IntersectionObserver) => any) {
+    let options = {
+      root: document.documentElement
+    };
+
+    let observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        callback(entry.intersectionRatio > 0, observer);
+      });
+    }, options);
+
+    observer.observe(element);
+  }
+
+  changeDataset() {
+    window.dispatchEvent(new Event("resize"));
+    //already set if being initialized
+    if(this.initTabs) {
+      return;
+    }
+    let t1i = this.t1.selectedIndex;
+    let datatype = null;
+    if(this.datasetData[t1i].type == "group") {
+      let groupData = <DatasetGroupData>this.datasetData[t1i];
+      let t2i = this.t2.toArray()[groupData.groupIndex].selectedIndex;
+      datatype = groupData.data.values[t2i].tag;
+    }
+    else {
+      let setData = <DatasetSetData>this.datasetData[t1i];
+      datatype = setData.data.tag;
+    }
+    this.updateDatatype(datatype);
+  }
+
+
+  setupDatasetData() {
+    this.datasetData = new Array(ExportAddItemComponent.FORM_ORDER.length);
+    for(let group of this.formData.datasetFormData.datasetGroups) {
+      let i = ExportAddItemComponent.FORM_ORDER.indexOf(group.tag);
+      this.datasetData[i] = <DatasetGroupData>{
+        type: "group",
+        data: group,
+        groupIndex: -1
+      };
+    }
+    for(let set of this.formData.datasetFormData.datasetValues) {
+      let i = ExportAddItemComponent.FORM_ORDER.indexOf(set.tag);
+      this.datasetData[i] = <DatasetSetData>{
+        type: "set",
+        data: set
+      };
+    }
+    let groupIndex = 0;
+    for(let i = 0; i < this.datasetData.length; i++) {
+      if(this.datasetData[i].type == "group") {
+        (<DatasetGroupData>this.datasetData[i]).groupIndex = groupIndex++;
+      }
+    }
+  }
 
 
   private initializeControls(initValues: FormState) {
     this.controls = {
-      datatype: null,
       dataset: {},
       fileGroups: {}
     };
-    let formData = initValues? this._formManager.setValues(initValues.dataset) : this._formManager.getFormData();
+    let formData: ActiveFormData<ExportDatasetItem>;
+    if(initValues) {
+      this.initTabs = initValues.tabs;
+      formData = this._formManager.setValues(initValues.dataset);
+    }
+    else {
+      formData = this._formManager.getFormData();
+    }
     this.formData = formData;
-    let {datatype, ...values} = formData.values;
+    let {...values} = formData.values;
     //initialize date values to date range
     if(initValues?.dates) {
       this.controls.dates = {
@@ -53,24 +146,9 @@ export class ExportAddItemComponent {
         end: this.formData.datasetItem.end
       }
     }
-    //setup main datatype control (always there, only needed once)
-    this.setupDatatypeControl(datatype);
     //setup variable controls
     this.setupDatasetControls(values);
     this.setupFileGroupControls(initValues?.fileGroups);
-  }
-
-  private setupDatatypeControl(datatype: string) {
-    let control = new FormControl(datatype);
-    let sub = control.valueChanges.subscribe((value: string) => {
-      if(!this.lockDatasetUpdates) {
-        this.updateDatatype(value)
-      }
-    });
-    this.controls.datatype = {
-      control,
-      sub
-    };
   }
 
   private updateDatatype(value: string) {
@@ -239,12 +317,26 @@ export class ExportAddItemComponent {
   }
 
   submit() {
+    let t1i = this.t1.selectedIndex;
+    let tabs: number[][] = [[t1i]];
+    let datatype: string;
+    if(this.datasetData[t1i].type == "group") {
+      let groupData = <DatasetGroupData>this.datasetData[t1i];
+      let t2i = this.t2.toArray()[groupData.groupIndex].selectedIndex;
+      tabs.push([groupData.groupIndex, t2i]);
+      datatype = groupData.data.values[t2i].tag;
+    }
+    else {
+      let setData = <DatasetSetData>this.datasetData[t1i];
+      datatype = setData.data.tag;
+    }
     //construct state
     let exportData: ExportPackageItemData = {
       datasetItem: this.formData.datasetItem,
       state: {
+        tabs: tabs,
         dataset: {
-          datatype: this.controls.datatype.control.value
+          datatype
         },
         fileGroups: {}
       },
@@ -295,6 +387,7 @@ export class ExportAddItemComponent {
 }
 
 export interface FormState {
+  tabs: number[][],
   dataset: StringMap,
   dates?: DateState,
   fileGroups: FileGroupStates
@@ -331,7 +424,6 @@ interface FileGroupControls {
 }
 
 interface ExportControlData {
-  datatype: ControlData,
   dataset: Controls,
   dates?: {
     start: Moment,
@@ -357,3 +449,21 @@ export interface ExportPackageItemData {
   state: FormState,
   labels: LabelData
 }
+
+
+
+interface DatasetData {
+  type: "set" | "group",
+  data: DatasetSelectorGroup | FormValue
+};
+
+interface DatasetSetData extends DatasetData {
+  type: "set",
+  data: FormValue
+};
+
+interface DatasetGroupData extends DatasetData {
+  type: "group",
+  data: DatasetSelectorGroup,
+  groupIndex: number
+};

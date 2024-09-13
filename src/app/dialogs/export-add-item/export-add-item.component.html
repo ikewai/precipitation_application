@@ -7,138 +7,167 @@
   </div>
 
   <div class="form-body">
-    <div class="control-group">
-      <div class="control">
-        <app-selector
-          [label]="formData.datasetFormData.label"
-          [tooltip]="formData.datasetFormData.description"
-          [values]="formData.datasetFormData.datasetValues"
-          [groupValues]="formData.datasetFormData.datasetGroups"
-          [control]="controls.datatype.control"
-        ></app-selector>
-      </div>
-    </div>
-    <div class="control-group control-subgroup">
-      <div
-        *ngFor="let field of formData.datasetItem.formData.default"
-        class="control">
-          <app-selector
-            [label]="field.label"
-            [tooltip]="field.description"
-            [values]="field.values"
-            [control]="controls.dataset[field.tag].control"
-          ></app-selector>
-      </div>
-    </div>
+    <div #tabContainer>
 
-    <div
-      *ngFor="let category of formData.datasetItem.formData.categorized"
-      class="control-group">
-      <div class="category-label">
-        <h4 class="inline-block">
-          {{category.label}}
-        </h4>
-        <mat-icon
-          aria-hidden="false"
-          aria-label="Tooltip"
-          matTooltipPosition="right"
-          [matTooltip]="category.description"
-          inline="true">
-          help
-        </mat-icon>
-      </div>
-      <div class="control-subgroup">
-        <div
-          *ngFor="let field of category.nodes"
-          class="control">
-          <app-selector
-            [label]="field.label"
-            [tooltip]="field.description"
-            [values]="field.values"
-            [control]="controls.dataset[field.tag].control"
-          ></app-selector>
-        </div>
-      </div>
+      <mat-tab-group #t1 dynamicHeight dynamic id="t1" class="t1-tabs" (selectedIndexChange)="changeDataset()">
+        <mat-tab *ngFor="let item of datasetData" [matTooltip]="item.data.description">
+          <ng-template mat-tab-label>
+            <label class="tab-label" [matTooltip]="item.data.description">{{item.data.label}}</label>
+          </ng-template>
+
+          <div *ngIf="item.type == 'group'; else set">
+
+            <mat-tab-group #t2 dynamicHeight id="t2" class="subform" (selectedIndexChange)="changeDataset()">
+              <mat-tab *ngFor="let value of item.data.values" [matTooltip]="value.description">
+                <ng-template mat-tab-label>
+                  <label class="tab-label" [matTooltip]="value.description">{{value.label}}</label>
+                </ng-template>
+                <template *ngTemplateOutlet="form"></template>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+
+          <ng-template #set>
+            <div class="subform">
+              <template *ngTemplateOutlet="form"></template>
+            </div>
+          </ng-template>
+
+        </mat-tab>
+      </mat-tab-group>
     </div>
 
-    <div class="spacer"></div>
 
-    <div *ngIf="formData.datasetItem.timeseriesHandler">
-      <app-date-selector
-        class="date-select"
-        label="Start Date"
-        [min]="formData.datasetItem.timeseriesHandler.start"
-        [max]="controls.dates.end"
-        [(date)]="controls.dates.start"
-        [period]="formData.datasetItem.timeseriesHandler.unit"
-        [readonly]="false">
-      </app-date-selector>
-      <app-date-selector
-        class="date-select"
-        label="End Date"
-        [min]="controls.dates.start"
-        [max]="formData.datasetItem.timeseriesHandler.end"
-        [(date)]="controls.dates.end"
-        [period]="formData.datasetItem.timeseriesHandler.unit"
-        [readonly]="false">
-      </app-date-selector>
-    </div>
 
-    <div>
-      <div *ngFor="let fileGroup of formData.datasetItem.fileGroups" class="file-group">
-        <h4>
-          File Properties
-        </h4>
-        <div class="file-group-control-block">
-          <div *ngFor="let properties of fileGroup.additionalProperties" class="inline-control">
-            <app-selector
-              [label]="properties.formData.label"
-              [tooltip]="properties.formData.description"
-              [values]="properties.formData.values"
-              [control]="controls.fileGroups[fileGroup.tag].fileProps[properties.formData.tag].control"
-              multiselect
-            ></app-selector>
+
+    <ng-template #form matTabContent>
+
+      <div class="tab-content">
+
+        <div class="control-group control-subgroup">
+          <div
+            *ngFor="let field of formData.datasetItem.formData.default"
+            class="control">
+              <app-selector
+                [label]="field.label"
+                [tooltip]="field.description"
+                [values]="field.values"
+                [control]="controls.dataset[field.tag].control"
+              ></app-selector>
           </div>
         </div>
 
-        <h4>
-          Files
-        </h4>
-        <table>
-          <tr *ngFor="let fileData of fileGroup.fileData">
-            <td>
-              <mat-checkbox class="checkbox"
-                [formControl]="controls.fileGroups[fileGroup.tag].files[fileData.tag].data.control">
-              </mat-checkbox>
-              {{fileData.label}}
-              <mat-icon
-                aria-hidden="false"
-                aria-label="Tooltip"
-                matTooltipPosition="right"
-                [matTooltip]="fileData.description"
-                inline="true">
-                help
-              </mat-icon>
+        <div
+          *ngFor="let category of formData.datasetItem.formData.categorized"
+          class="control-group">
+          <div class="category-label">
+            <h4 class="inline-block">
+              {{category.label}}
+            </h4>
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Tooltip"
+              matTooltipPosition="right"
+              [matTooltip]="category.description"
+              inline="true">
+              help
+            </mat-icon>
+          </div>
+          <div class="control-subgroup">
+            <div
+              *ngFor="let field of category.nodes"
+              class="control">
+              <app-selector
+                [label]="field.label"
+                [tooltip]="field.description"
+                [values]="field.values"
+                [control]="controls.dataset[field.tag].control"
+              ></app-selector>
+            </div>
+          </div>
+        </div>
 
-            </td>
-            <td>
-              Filetype: {{fileData.fileType.type}} (.{{fileData.fileType.ext}})
-              <mat-icon
-                aria-hidden="false"
-                aria-label="Tooltip"
-                matTooltipPosition="right"
-                [matTooltip]="fileData.fileType.description"
-                inline="true">
-                help
-              </mat-icon>
-            </td>
-          </tr>
-        </table>
+        <div class="spacer"></div>
+
+        <div *ngIf="formData.datasetItem.timeseriesHandler">
+          <app-date-selector
+            class="date-select"
+            label="Start Date"
+            [min]="formData.datasetItem.timeseriesHandler.start"
+            [max]="controls.dates.end"
+            [(date)]="controls.dates.start"
+            [period]="formData.datasetItem.timeseriesHandler.unit"
+            [readonly]="false">
+          </app-date-selector>
+          <app-date-selector
+            class="date-select"
+            label="End Date"
+            [min]="controls.dates.start"
+            [max]="formData.datasetItem.timeseriesHandler.end"
+            [(date)]="controls.dates.end"
+            [period]="formData.datasetItem.timeseriesHandler.unit"
+            [readonly]="false">
+          </app-date-selector>
+        </div>
+
+        <div class="file-group-container">
+          <div *ngFor="let fileGroup of formData.datasetItem.fileGroups" class="file-group">
+            <h4>
+              File Properties
+            </h4>
+            <div class="file-group-control-block">
+              <div *ngFor="let properties of fileGroup.additionalProperties" class="inline-control">
+                <app-selector
+                  [label]="properties.formData.label"
+                  [tooltip]="properties.formData.description"
+                  [values]="properties.formData.values"
+                  [control]="controls.fileGroups[fileGroup.tag].fileProps[properties.formData.tag].control"
+                  multiselect
+                ></app-selector>
+              </div>
+            </div>
+
+            <h4>
+              Files
+            </h4>
+            <table>
+              <tr *ngFor="let fileData of fileGroup.fileData">
+                <td>
+                  <mat-checkbox class="checkbox"
+                    [formControl]="controls.fileGroups[fileGroup.tag].files[fileData.tag].data.control">
+                  </mat-checkbox>
+                  {{fileData.label}}
+                  <mat-icon
+                    aria-hidden="false"
+                    aria-label="Tooltip"
+                    matTooltipPosition="right"
+                    [matTooltip]="fileData.description"
+                    inline="true">
+                    help
+                  </mat-icon>
+
+                </td>
+                <td>
+                  Filetype: {{fileData.fileType.type}} (.{{fileData.fileType.ext}})
+                  <mat-icon
+                    aria-hidden="false"
+                    aria-label="Tooltip"
+                    matTooltipPosition="right"
+                    [matTooltip]="fileData.fileType.description"
+                    inline="true">
+                    help
+                  </mat-icon>
+                </td>
+              </tr>
+            </table>
 
 
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-template>
   </div>
+
 
   <div class="form-buttons">
     <button  mat-raised-button color="primary" [disabled]="numSelected < 1" (click)="submit()">
