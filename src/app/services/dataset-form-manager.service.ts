@@ -956,27 +956,68 @@ export class DatasetFormManagerService {
     let contemporaryClimatologyRainfall30yrExportItem = new ExportDatasetItem([contemporaryClimatologyRainfall30yrFileGroup], {
       mean_type: "mean_30yr_annual"
     }, "Contemporary Mean Annual 30 Year Rainfall Climatologies");
-    let contemporaryClimatologyTemperatureMonthExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureMonthFileGroup], {
+
+
+
+    let contemporaryClimatologyMeanTemperatureMonthExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureMonthFileGroup], {
       mean_type: "mean_monthly"
-    }, "Contemporary Mean Monthly Temperature Climatologies");
-    let contemporaryClimatologyTemperatureDecadeExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureDecadeFileGroup], {
+    }, "Contemporary Mean Monthly Mean Temperature Climatologies");
+    let contemporaryClimatologyMeanTemperatureDecadeExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureDecadeFileGroup], {
       mean_type: "mean_annual_decadal"
-    }, "Contemporary Mean Annual Decadal Temperature Climatologies");
-    let contemporaryClimatologyTemperature30yrExportItem = new ExportDatasetItem([contemporaryClimatologyTemperature30yrFileGroup], {
+    }, "Contemporary Mean Annual Decadal Mean Temperature Climatologies");
+    let contemporaryClimatologyMeanTemperature30yrExportItem = new ExportDatasetItem([contemporaryClimatologyTemperature30yrFileGroup], {
       mean_type: "mean_30yr_annual"
-    }, "Contemporary Mean Annual 30 Year Temperature Climatologies");
+    }, "Contemporary Mean Annual 30 Year Mean Temperature Climatologies");
+    let contemporaryClimatologyMaxTemperatureMonthExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureMonthFileGroup], {
+      mean_type: "mean_monthly"
+    }, "Contemporary Mean Monthly Maximum Temperature Climatologies");
+    let contemporaryClimatologyMaxTemperatureDecadeExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureDecadeFileGroup], {
+      mean_type: "mean_annual_decadal"
+    }, "Contemporary Mean Annual Decadal Maximum Temperature Climatologies");
+    let contemporaryClimatologyMaxTemperature30yrExportItem = new ExportDatasetItem([contemporaryClimatologyTemperature30yrFileGroup], {
+      mean_type: "mean_30yr_annual"
+    }, "Contemporary Mean Annual 30 Year Maximum Temperature Climatologies");
+    let contemporaryClimatologyMinTemperatureMonthExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureMonthFileGroup], {
+      mean_type: "mean_monthly"
+    }, "Contemporary Mean Monthly Minimum Temperature Climatologies");
+    let contemporaryClimatologyMinTemperatureDecadeExportItem = new ExportDatasetItem([contemporaryClimatologyTemperatureDecadeFileGroup], {
+      mean_type: "mean_annual_decadal"
+    }, "Contemporary Mean Annual Decadal Minimum Temperature Climatologies");
+    let contemporaryClimatologyMinTemperature30yrExportItem = new ExportDatasetItem([contemporaryClimatologyTemperature30yrFileGroup], {
+      mean_type: "mean_30yr_annual"
+    }, "Contemporary Mean Annual 30 Year Minimum Temperature Climatologies");
+
+
+
+
     let legacyClimatologyRainfallMonthExportItem = new ExportDatasetItem([legacyClimatologyRainfallMonthFileGroup], {
       mean_type: "mean_monthly"
     }, "Legacy Mean Monthly Rainfall Climatologies");
     let legacyClimatologyRainfall30yrExportItem = new ExportDatasetItem([legacyClimatologyRainfall30yrFileGroup], {
       mean_type: "mean_30yr_annual"
     }, "Legacy Mean Annual 30 Year Rainfall Climatologies");
-    let legacyClimatologyTemperatureMonthExportItem = new ExportDatasetItem([legacyClimatologyTemperatureMonthFileGroup], {
+
+
+
+    let legacyClimatologyMeanTemperatureMonthExportItem = new ExportDatasetItem([legacyClimatologyTemperatureMonthFileGroup], {
       mean_type: "mean_monthly"
-    }, "Legacy Mean Monthly Temperature Climatologies");
-    let legacyClimatologyTemperature30yrExportItem = new ExportDatasetItem([legacyClimatologyTemperature30yrFileGroup], {
+    }, "Legacy Mean Monthly Mean Temperature Climatologies");
+    let legacyClimatologyMeanTemperature30yrExportItem = new ExportDatasetItem([legacyClimatologyTemperature30yrFileGroup], {
       mean_type: "mean_30yr_annual"
-    }, "Legacy Mean Annual 30 Year Temperature Climatologies");
+    }, "Legacy Mean Annual 30 Year Mean Temperature Climatologies");
+    let legacyClimatologyMaxTemperatureMonthExportItem = new ExportDatasetItem([legacyClimatologyTemperatureMonthFileGroup], {
+      mean_type: "mean_monthly"
+    }, "Legacy Mean Monthly Maximum Temperature Climatologies");
+    let legacyClimatologyMaxTemperature30yrExportItem = new ExportDatasetItem([legacyClimatologyTemperature30yrFileGroup], {
+      mean_type: "mean_30yr_annual"
+    }, "Legacy Mean Annual 30 Year Maximum Temperature Climatologies");
+    let legacyClimatologyMinTemperatureMonthExportItem = new ExportDatasetItem([legacyClimatologyTemperatureMonthFileGroup], {
+      mean_type: "mean_monthly"
+    }, "Legacy Mean Monthly Minimum Temperature Climatologies");
+    let legacyClimatologyMinTemperature30yrExportItem = new ExportDatasetItem([legacyClimatologyTemperature30yrFileGroup], {
+      mean_type: "mean_30yr_annual"
+    }, "Legacy Mean Annual 30 Year Minimum Temperature Climatologies");
+
 
     ////Datasets
     let rainfallExportDataset = new Dataset<ExportDatasetItem>(rainfallDatasetDisplayData, {
@@ -1048,27 +1089,27 @@ export class DatasetFormManagerService {
       variable: "air_temperature",
       aggregation: "mean"
     }, contemporaryClimatologyExportFormData, [
-      contemporaryClimatologyTemperatureMonthExportItem,
-      contemporaryClimatologyTemperatureDecadeExportItem,
-      contemporaryClimatologyTemperature30yrExportItem
+      contemporaryClimatologyMeanTemperatureMonthExportItem,
+      contemporaryClimatologyMeanTemperatureDecadeExportItem,
+      contemporaryClimatologyMeanTemperature30yrExportItem
     ]);
     let contemporaryClimatologyMaxTemperatureExportDataset = new Dataset<ExportDatasetItem>(contemporaryMaxTemperatureClimatologyDatasetDisplayData, {
       datatype: "contemporary_climatology",
       variable: "air_temperature",
       aggregation: "max"
     }, contemporaryClimatologyExportFormData, [
-      contemporaryClimatologyTemperatureMonthExportItem,
-      contemporaryClimatologyTemperatureDecadeExportItem,
-      contemporaryClimatologyTemperature30yrExportItem
+      contemporaryClimatologyMaxTemperatureMonthExportItem,
+      contemporaryClimatologyMaxTemperatureDecadeExportItem,
+      contemporaryClimatologyMaxTemperature30yrExportItem
     ]);
     let contemporaryClimatologyMinTemperatureExportDataset = new Dataset<ExportDatasetItem>(contemporaryMinTemperatureClimatologyDatasetDisplayData, {
       datatype: "contemporary_climatology",
       variable: "air_temperature",
       aggregation: "min"
     }, contemporaryClimatologyExportFormData, [
-      contemporaryClimatologyTemperatureMonthExportItem,
-      contemporaryClimatologyTemperatureDecadeExportItem,
-      contemporaryClimatologyTemperature30yrExportItem
+      contemporaryClimatologyMinTemperatureMonthExportItem,
+      contemporaryClimatologyMinTemperatureDecadeExportItem,
+      contemporaryClimatologyMinTemperature30yrExportItem
     ]);
     let legacyClimatologyRainfallExportDataset = new Dataset<ExportDatasetItem>(legacyRainfallClimatologyDatasetDisplayData, {
       datatype: "legacy_climatology",
@@ -1082,24 +1123,24 @@ export class DatasetFormManagerService {
       variable: "air_temperature",
       aggregation: "mean"
     }, legacyClimatologyExportFormData, [
-      legacyClimatologyTemperatureMonthExportItem,
-      legacyClimatologyTemperature30yrExportItem
+      legacyClimatologyMeanTemperatureMonthExportItem,
+      legacyClimatologyMeanTemperature30yrExportItem
     ]);
     let legacyClimatologyMaxTemperatureExportDataset = new Dataset<ExportDatasetItem>(legacyMaxTemperatureClimatologyDatasetDisplayData, {
       datatype: "legacy_climatology",
       variable: "air_temperature",
       aggregation: "max"
     }, legacyClimatologyExportFormData, [
-      legacyClimatologyTemperatureMonthExportItem,
-      legacyClimatologyTemperature30yrExportItem
+      legacyClimatologyMaxTemperatureMonthExportItem,
+      legacyClimatologyMaxTemperature30yrExportItem
     ]);
     let legacyClimatologyMinTemperatureExportDataset = new Dataset<ExportDatasetItem>(legacyMinTemperatureClimatologyDatasetDisplayData, {
       datatype: "legacy_climatology",
       variable: "air_temperature",
       aggregation: "min"
     }, legacyClimatologyExportFormData, [
-      legacyClimatologyTemperatureMonthExportItem,
-      legacyClimatologyTemperature30yrExportItem
+      legacyClimatologyMinTemperatureMonthExportItem,
+      legacyClimatologyMinTemperature30yrExportItem
     ]);
 
 
